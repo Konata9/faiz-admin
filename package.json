@@ -1,0 +1,27 @@
+{
+  "name": "faiz-admin",
+  "version": "1.0.0",
+  "description": "Admin system boilerplate by React, Koa, MongoDB and GraphQL.",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "npx nodemon --inspect ./server/index.js"
+  },
+  "keywords": [
+    "admin",
+    "system"
+  ],
+  "author": "Konata9",
+  "license": "MIT",
+  "devDependencies": {
+    "cross-env": "^7.0.0",
+    "nodemon": "^2.0.2"
+  },
+  "dependencies": {
+    "apollo-server-koa": "^2.9.16",
+    "graphql": "^14.6.0",
+    "koa": "^2.11.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^8.0.6",
+    "mongoose": "^5.8.10"
+  }
+}
