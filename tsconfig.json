@@ -18,7 +18,9 @@
   },
   "include": [
     "frontend",
-    "server"
+    "server",
+    "webpack/webpack.dev.config.js",
+    "webpack/webpack.config.js"
   ],
   "exclude": [
     "node_modules"

@@ -1,6 +1,13 @@
+import { resolve } from 'path'
+
 import * as Koa from 'koa'
 import * as bodyParser from 'koa-bodyparser'
 import { ApolloServer, gql } from 'apollo-server-koa'
+
+import * as webpack from 'webpack'
+import devMiddleware from './src/middleware/devMiddleware'
+
+const compiler = webpack(require(resolve(__dirname, '../webpack/webpack.dev.config.js')))
 
 import CONFIG from './config'
 const { server: { port, host } } = CONFIG
@@ -41,6 +48,8 @@ const apolloServer = new ApolloServer({ typeDefs, resolvers })
 
 const database = new Database()
 database.init()
+
+app.use(devMiddleware(compiler, { publicPath: '/' }))
 
 app.use(bodyParser())
 

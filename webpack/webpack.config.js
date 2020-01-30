@@ -1,13 +1,16 @@
 const path = require('path')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = {
-  entry: './src/index.js',
+  entry: path.resolve(__dirname, '../frontend/src/index.tsx'),
   output: {
     filename: '[name].[chunkhash].js',
-    path: path.resolve(__dirname, './dist')
+    path: path.resolve(__dirname, '../frontend/dist')
+  },
+  resolve: {
+    extensions: [".js", ".ts", ".tsx"]
   },
   module: {
     rules: [
@@ -16,17 +19,22 @@ module.exports = {
         use: ['style-loader', 'css-loader']
       },
       {
+        test: /\.ts(x)$/,
+        use: 'ts-loader',
+        exclude: /node_modules/
+      },
+      {
         test: /\.js$/,
         use: 'babel-loader',
         exclude: /node_modules/
-      }
+      },
     ]
   },
   plugins: [
-    new CleanWebpackPlugin([path.resolve(__dirname, './dist')]),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: 'Faiz Admin',
-      template: path.resolve(__dirname, './index.html'),
+      template: path.resolve(__dirname, '../frontend/index.html'),
       inject: true
     })
   ]

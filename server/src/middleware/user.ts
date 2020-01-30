@@ -1,4 +1,4 @@
-const UserModel = require('../database/schema/user')
+import UserModel from '../database/schema/user'
 
 export async function createUser(userInfo: any) {
   try {
