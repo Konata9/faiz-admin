@@ -1,14 +1,13 @@
-const Router = require('koa-router')
+import * as Router from 'koa-router'
 const router = new Router()
 
 const { createUser } = require('../middleware/user')
 
 router.get('/test', async (ctx, next) => {
-
   const userInfo = {
     username: 'Konata9',
     password: '123456',
-    role: []
+    role: [String]
   }
 
   await createUser(userInfo)
@@ -18,4 +17,4 @@ router.get('/test', async (ctx, next) => {
   }
 })
 
-module.exports = router
+export default router

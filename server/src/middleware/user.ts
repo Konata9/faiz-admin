@@ -1,13 +1,9 @@
 const UserModel = require('../database/schema/user')
 
-async function createUser(userInfo) {
+export async function createUser(userInfo: any) {
   try {
     await UserModel.create(userInfo)
   } catch (error) {
     console.error(error)
   }
-}
-
-module.exports = {
-  createUser
 }

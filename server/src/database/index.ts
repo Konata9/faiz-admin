@@ -1,10 +1,16 @@
-const mongoose = require('mongoose')
+import * as mongoose from 'mongoose'
 
-const { DEV, DB_CONNECTION } = require('../constants')
-const { mode, database } = require('../../config')
+import CONSTANTS from '../constants'
+const { DEV, DB_CONNECTION } = CONSTANTS
+
+import config from '../../config'
+const { mode, database } = config
 const dbPath = `mongodb://${database.host}:${database.port}/${database.dbname}`
 
 class Database {
+
+  private options: {}
+
   constructor(options = {}) {
     this.options = options
     mongoose.set('debug', mode === DEV)
@@ -18,7 +24,7 @@ class Database {
         console.warn('db connection has disconnected')
       })
 
-      mongoose.connection.on(DB_CONNECTION.ERROR, (error) => {
+      mongoose.connection.on(DB_CONNECTION.ERROR, (error: any) => {
         console.error(error)
       })
 
@@ -31,4 +37,4 @@ class Database {
   }
 }
 
-module.exports = Database
+export default Database

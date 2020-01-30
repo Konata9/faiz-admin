@@ -1,11 +1,13 @@
 const { NODE_ENV, SERVER_HOST, SERVER_PORT, DB_HOST, DB_PORT, DB_NAME } = process.env
-const { DEV } = require('../src/constants')
 
-module.exports = {
+import CONSTANTS from '../src/constants'
+const { DEV } = CONSTANTS
+
+export default {
   mode: NODE_ENV || DEV,
   server: {
     host: SERVER_HOST || '127.0.0.1',
-    port: SERVER_PORT || 3333
+    port: Number(SERVER_PORT) || 3333
   },
   database: {
     host: DB_HOST || '127.0.0.1',

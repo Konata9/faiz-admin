@@ -1,11 +1,12 @@
-const Koa = require('koa')
-const bodyParser = require('koa-bodyparser')
+import * as Koa from 'koa'
+import * as bodyParser from 'koa-bodyparser'
+import { ApolloServer, gql } from 'apollo-server-koa'
 
-const { ApolloServer, gql } = require('apollo-server-koa')
+import CONFIG from './config'
+const { server: { port, host } } = CONFIG
 
-const { server } = require('./config')
-const Database = require('./src/database')
-const router = require('./src/router')
+import Database from './src/database'
+import router from './src/router'
 
 const books = [
   {
@@ -16,7 +17,7 @@ const books = [
     title: 'Jurassic Park',
     author: 'Michael Crichton',
   },
-];
+]
 
 const typeDefs = gql`
 type Book {
@@ -27,7 +28,7 @@ type Book {
 type Query {
   books: [Book]
 }
-`;
+`
 
 const resolvers = {
   Query: {
@@ -48,6 +49,6 @@ app.use(router.routes())
 
 apolloServer.applyMiddleware({ app })
 
-app.listen(server.port, server.host, () => {
-  console.info(`Server lunched: http://${server.host}:${server.port}`)
+app.listen(port, host, null, () => {
+  console.info(`Server lunched: http://${host}:${port}`)
 })
