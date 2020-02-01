@@ -5,28 +5,33 @@ import * as bodyParser from 'koa-bodyparser'
 import { ApolloServer, gql } from 'apollo-server-koa'
 
 import * as webpack from 'webpack'
-import devMiddleware from './src/middleware/devMiddleware'
+import * as koaWebpack from 'koa-webpack'
 
-const compiler = webpack(require(resolve(__dirname, '../webpack/webpack.dev.config.js')))
+import CONFIG from './config/index'
 
-import CONFIG from './config'
-const { server: { port, host } } = CONFIG
+import Database from './src/database/index'
+import router from './src/router/index'
 
-import Database from './src/database'
-import router from './src/router'
+(async function () {
 
-const books = [
-  {
-    title: 'Harry Potter and the Chamber of Secrets',
-    author: 'J.K. Rowling',
-  },
-  {
-    title: 'Jurassic Park',
-    author: 'Michael Crichton',
-  },
-]
+  const { server: { port, host } } = CONFIG
 
-const typeDefs = gql`
+  const webpackConfig = require(resolve(__dirname, '../webpack/webpack.dev.config.js'))
+  const compiler = webpack(webpackConfig)
+  const middleware = await koaWebpack({ compiler })
+
+  const books = [
+    {
+      title: 'Harry Potter and the Chamber of Secrets',
+      author: 'J.K. Rowling',
+    },
+    {
+      title: 'Jurassic Park',
+      author: 'Michael Crichton',
+    },
+  ]
+
+  const typeDefs = gql`
 type Book {
   title: String
   author: String
@@ -37,27 +42,33 @@ type Query {
 }
 `
 
-const resolvers = {
-  Query: {
-    books: () => books,
-  },
-};
+  const resolvers = {
+    Query: {
+      books: () => books,
+    },
+  };
 
-const app = new Koa()
-const apolloServer = new ApolloServer({ typeDefs, resolvers })
+  const app = new Koa()
+  const apolloServer = new ApolloServer({ typeDefs, resolvers })
 
-const database = new Database()
-database.init()
+  const database = new Database()
+  database.init()
 
-app.use(devMiddleware(compiler, { publicPath: '/' }))
+  app.use(middleware)
+  app.use(async (ctx) => {
+    const filename = resolve(webpackConfig.output.path, 'index.html')
+    ctx.response.type = 'html'
+    ctx.response.body = middleware.devMiddleware.fileSystem.createReadStream(filename)
+  })
 
-app.use(bodyParser())
+  app.use(bodyParser())
 
-app.use(router.routes())
-  .use(router.allowedMethods())
+  app.use(router.routes())
+    .use(router.allowedMethods())
 
-apolloServer.applyMiddleware({ app })
+  apolloServer.applyMiddleware({ app })
 
-app.listen(port, host, null, () => {
-  console.info(`Server lunched: http://${host}:${port}`)
-})
+  app.listen(port, host, null, () => {
+    console.info(`Server lunched: http://${host}:${port}`)
+  })
+})()

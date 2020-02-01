@@ -10,7 +10,8 @@
     "target": "es5",
     "jsx": "react",
     "types": [
-      "react"
+      "react",
+      "node"
     ],
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,

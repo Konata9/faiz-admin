@@ -1,6 +1,6 @@
 const { NODE_ENV, SERVER_HOST, SERVER_PORT, DB_HOST, DB_PORT, DB_NAME } = process.env
 
-import CONSTANTS from '../src/constants'
+import CONSTANTS from '../src/constants/index'
 const { DEV } = CONSTANTS
 
 export default {

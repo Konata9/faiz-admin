@@ -1,16 +1,18 @@
 const path = require('path')
-
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = {
-  entry: path.resolve(__dirname, '../frontend/src/index.tsx'),
+  entry: [
+    path.resolve(__dirname, '../frontend/src/index.tsx')
+  ],
   output: {
-    filename: '[name].[chunkhash].js',
-    path: path.resolve(__dirname, '../frontend/dist')
+    publicPath: '/',
+    filename: '[name].[hash].js',
+    path: path.resolve(__dirname, '../frontend/dist'),
   },
   resolve: {
-    extensions: [".js", ".ts", ".tsx"]
+    extensions: [".js", ".ts", ".tsx"],
   },
   module: {
     rules: [
