@@ -4,12 +4,13 @@
     "noImplicitAny": true,
     "outDir": "./dist",
     "lib": [
-      "es2015",
-      "ES6"
+      "es2016",
+      "esnext.asynciterable"
     ],
-    "target": "es6",
+    "target": "es2016",
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "pretty": true
   }
 }

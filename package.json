@@ -4,7 +4,7 @@
   "description": "Admin system boilerplate by React, Koa, MongoDB and GraphQL.",
   "main": "server/index.js",
   "scripts": {
-    "dev": "npx ts-node ./server/index.ts"
+    "dev": "npx ts-node --project ./server/tsconfig.json ./server/index.ts"
   },
   "keywords": [
     "admin",
@@ -63,6 +63,8 @@
     "react-router": "^5.1.2",
     "redux": "^4.0.5",
     "redux-observable": "^1.2.0",
-    "rxjs": "^6.5.4"
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^6.5.4",
+    "type-graphql": "^0.17.6"
   }
 }
