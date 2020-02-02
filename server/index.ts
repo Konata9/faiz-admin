@@ -16,7 +16,6 @@ import router from './src/router/index'
 import schema from './src/graphql/index'
 
 (async function () {
-
   const { server: { port, host } } = CONFIG
 
   const webpackConfig = require(resolve(__dirname, '../webpack/webpack.dev.config.js'))

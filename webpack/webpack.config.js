@@ -12,7 +12,7 @@ module.exports = {
     path: path.resolve(__dirname, '../frontend/dist'),
   },
   resolve: {
-    extensions: [".js", ".ts", ".tsx"],
+    extensions: [".ts", ".tsx", ".js",],
   },
   module: {
     rules: [
@@ -21,7 +21,7 @@ module.exports = {
         use: ['style-loader', 'css-loader']
       },
       {
-        test: /\.ts(x)$/,
+        test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/
       },

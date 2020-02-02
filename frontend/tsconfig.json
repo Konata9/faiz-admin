@@ -3,7 +3,7 @@
     "module": "commonjs",
     "outDir": "./dist",
     "lib": [
-      "es6",
+      "es2015",
       "dom"
     ],
     "target": "es5",
@@ -12,11 +12,12 @@
       "react",
       "node"
     ],
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "strictNullChecks": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
-    "pretty": true
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "pretty": true,
+    "strictNullChecks": true,
+    "sourceMap": true,
   }
 }
