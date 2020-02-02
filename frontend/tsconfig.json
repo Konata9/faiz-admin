@@ -1,10 +1,9 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "noImplicitAny": true,
     "outDir": "./dist",
     "lib": [
-      "es2015",
+      "es6",
       "dom"
     ],
     "target": "es5",
@@ -13,6 +12,9 @@
       "react",
       "node"
     ],
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "pretty": true

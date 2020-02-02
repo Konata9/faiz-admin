@@ -1,6 +1,7 @@
 # Faiz-admin
 
 ## Tech Stack
+- Language: TypeScript
 - Frontend: React
-- Backend: 
-- DB: MongoDB with GraphQL
+- Server: Koa2
+- DB: MongoDB
