@@ -10,10 +10,12 @@ const App = () => {
 
   const [count, useCount] = useState(0)
 
-  const res = useQuery(getUser)
+  const { data, refetch } = useQuery(getUser)
 
   const handleClick = () => {
     useCount(count + 1)
+    refetch()
+    console.log(data)
   }
 
   return (

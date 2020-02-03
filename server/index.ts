@@ -8,12 +8,12 @@ import { ApolloServer } from 'apollo-server-koa'
 import * as webpack from 'webpack'
 import * as koaWebpack from 'koa-webpack'
 
-import CONFIG from './config/index'
+import CONFIG from './config'
 
-import Database from './src/database/index'
-import router from './src/router/index'
+import Database from './src/database'
+import router from './src/router'
 
-import schema from './src/graphql/index'
+import schema from './src/graphql'
 
 (async function () {
   const { server: { port, host } } = CONFIG

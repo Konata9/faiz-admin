@@ -6,12 +6,12 @@ import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { Provider } from 'react-redux'
 
-import store from './store/index'
-import CONFIG from '../config/index'
+import CONFIG from '../config'
+
+import store from './store'
 import App from './modules/app'
 
 const { apollo: { host, port } } = CONFIG
-
 const client = new ApolloClient({
   uri: `http://${host}:${port}/graphql`
 })
