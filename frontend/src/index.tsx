@@ -13,7 +13,7 @@ import App from './modules/app'
 const { apollo: { host, port } } = CONFIG
 
 const client = new ApolloClient({
-  uri: `http://${host}:${port}`
+  uri: `http://${host}:${port}/graphql`
 })
 
 ReactDOM.render(
