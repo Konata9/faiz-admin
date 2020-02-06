@@ -1,11 +1,19 @@
 import * as React from 'react'
+import styled from 'styled-components'
 import { Card } from 'antd'
+
+const StyledLayout = styled.div`
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: 
+`
 
 const Login = () => {
   return (
-    <div>
+    <StyledLayout>
       This is Login
-    </div>
+    </StyledLayout>
   )
 }
 
