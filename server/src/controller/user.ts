@@ -15,4 +15,3 @@ export async function createUser(userInfo: any) {
     console.error(error)
   }
 }
-

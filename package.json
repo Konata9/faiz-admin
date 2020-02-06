@@ -4,7 +4,8 @@
   "description": "Admin system boilerplate by React, Koa, MongoDB and GraphQL.",
   "main": "server/index.js",
   "scripts": {
-    "dev": "npx ts-node --project ./server/tsconfig.json ./server/index.ts"
+    "dev": "nodemon",
+    "dev:serve": "npx ts-node --inspect --project ./server/tsconfig.json ./server/index.ts"
   },
   "keywords": [
     "admin",
@@ -41,6 +42,7 @@
     "file-loader": "^5.0.2",
     "html-webpack-plugin": "^3.2.0",
     "koa-webpack": "^5.3.0",
+    "nodemon": "^2.0.2",
     "react-hot-loader": "^4.12.19",
     "style-loader": "^1.1.3",
     "ts-loader": "^6.2.1",

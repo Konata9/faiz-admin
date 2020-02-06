@@ -22,7 +22,6 @@ import schema from './src/graphql'
   const compiler = webpack(webpackConfig)
   const middleware = await koaWebpack({ compiler })
 
-
   const app = new Koa()
   const apolloServer = new ApolloServer({ schema })
 
@@ -30,6 +29,16 @@ import schema from './src/graphql'
   database.init()
 
   app.use(middleware)
+
+  app.use(async (ctx) => {
+    const { request: { url = '' } = {} } = ctx
+
+    if (url.indexOf('api') === -1) {
+      const filename = resolve(webpackConfig.output.path, 'index.html')
+      ctx.response.type = 'html'
+      ctx.response.body = middleware.devMiddleware.fileSystem.createReadStream(filename)
+    }
+  });
 
   app.use(bodyParser())
 

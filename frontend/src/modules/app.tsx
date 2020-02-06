@@ -1,28 +1,17 @@
 import { hot } from 'react-hot-loader/root'
 import * as React from 'react'
+import { Route, Switch } from 'react-router-dom'
 
-import { useQuery } from '@apollo/react-hooks'
-import { getUser } from './global/epic'
-
-const { useState } = React
+import Layout from './layout'
+import Login from './login/index'
 
 const App = () => {
 
-  const [count, useCount] = useState(0)
-
-  const { data, refetch } = useQuery(getUser)
-
-  const handleClick = () => {
-    useCount(count + 1)
-    refetch()
-    console.log(data)
-  }
-
   return (
-    <div>
-      <p>Count: {count}</p>
-      <button onClick={handleClick}>Click it!</button>
-    </div>
+    <Switch>
+      <Route path="/login" component={Login} exact />
+      <Route path="/" component={Layout} exact />
+    </Switch>
   )
 }
 
