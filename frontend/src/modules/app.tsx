@@ -5,6 +5,7 @@ import { inject, observer } from 'mobx-react'
 
 import { IStore, IRootStore } from '../store'
 
+import { StyledLayout } from './styles/layout'
 import Layout from './layout'
 import Login from './login/index'
 
@@ -24,7 +25,7 @@ const App = inject((stores: IStore) => {
 
       if (!languageInited) {
         return (
-          <div>Loading...</div>
+          <StyledLayout>Loading...</StyledLayout>
         )
       }
 

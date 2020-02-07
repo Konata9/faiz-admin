@@ -68,6 +68,7 @@
     "mobx": "^5.15.4",
     "mobx-react": "^6.1.7",
     "mongoose": "^5.8.10",
+    "normalize.css": "^8.0.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-intl-universal": "^2.2.2",
