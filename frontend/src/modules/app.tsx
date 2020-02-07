@@ -5,7 +5,25 @@ import { Route, Switch } from 'react-router-dom'
 import Layout from './layout'
 import Login from './login/index'
 
+const { useState, useEffect } = React
+
 const App = () => {
+
+  const [intlInited, setIntlInit] = useState(false)
+
+  const loadLocales = async function () {
+    setIntlInit(true)
+  }
+
+  useEffect(() => {
+    loadLocales()
+  }, [])
+
+  if (!intlInited) {
+    return (
+      <div>Loading...</div>
+    )
+  }
 
   return (
     <Switch>

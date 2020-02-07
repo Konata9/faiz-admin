@@ -4,11 +4,11 @@ import * as ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks'
-import { Provider } from 'react-redux'
+import { Provider } from 'mobx-react'
 
 import CONFIG from '../config'
 
-import store from './store'
+import rootStore from './store/root'
 import App from './modules/app'
 
 const { apollo: { host, port } } = CONFIG
@@ -17,7 +17,7 @@ const client = new ApolloClient({
 })
 
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={rootStore}>
     <BrowserRouter>
       <ApolloProvider client={client}>
         <App />
