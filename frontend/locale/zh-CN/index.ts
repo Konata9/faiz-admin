@@ -1,3 +1,6 @@
+import common from './common'
+
 export default {
-  welcome: '欢迎来到'
+  welcome: '欢迎',
+  ...common,
 }

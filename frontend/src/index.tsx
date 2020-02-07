@@ -8,7 +8,7 @@ import { Provider } from 'mobx-react'
 
 import CONFIG from '../config'
 
-import rootStore from './store/root'
+import store from './store'
 import App from './modules/app'
 
 const { apollo: { host, port } } = CONFIG
@@ -17,7 +17,7 @@ const client = new ApolloClient({
 })
 
 ReactDOM.render(
-  <Provider store={rootStore}>
+  <Provider {...store}>
     <BrowserRouter>
       <ApolloProvider client={client}>
         <App />
