@@ -2,12 +2,15 @@ import * as intl from 'react-intl-universal'
 import { observable, action } from 'mobx'
 
 import { LANGUAGE, LANGUAGE_STORE_KEY } from '../constants'
+import zh_CN from '../../locale/zh_CN'
 
 const DEFAULT_LANGUAGE = LANGUAGE.ZH_CN
 
 const locales = {
-  [LANGUAGE.ZH_CN]: require('../../locale/zh-CN')
+  [LANGUAGE.ZH_CN]: zh_CN
 }
+
+console.log(locales)
 
 export interface IRootStore {
   languageInited: boolean

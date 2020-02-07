@@ -1,20 +1,32 @@
 import * as React from 'react'
-import styled from 'styled-components'
-import { Card } from 'antd'
+import { Card, Form, Input, Button } from 'antd'
 
-const StyledLayout = styled.div`
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  background: 
-`
+import { StyledLayout } from '../style/layout'
 
-const Login = () => {
+import { formatMessage } from '../../utils'
+
+const Login = Form.create()(() => {
+  console.log('666', formatMessage('system.add'))
+
   return (
     <StyledLayout>
-      This is Login
+      <Card title={null}>
+        <Form>
+          <Form.Item>
+            <Input />
+          </Form.Item>
+
+          <Form.Item>
+            <Input />
+          </Form.Item>
+
+          <Form.Item>
+            <Button>{formatMessage('system.loading')}</Button>
+          </Form.Item>
+        </Form>
+      </Card>
     </StyledLayout>
   )
-}
+})
 
 export default Login
