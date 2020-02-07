@@ -1,7 +1,19 @@
 export default {
-  'system.loading': '系统加载中...',
   system: {
+    logo: 'Faiz Admin System',
     loading: '系统加载中...',
-    add: '+++'
+    login: '登录',
+    logout: '登出'
+  },
+  button: {
+    confirm: '确认',
+    cancel: '取消',
+    submit: '提交',
+    create: '新建',
+    close: '关闭',
+    save: '保存',
+    update: '更新',
+    delete: '删除',
+    edit: '编辑'
   }
 }

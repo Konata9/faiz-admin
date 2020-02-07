@@ -1,6 +1,9 @@
 import common from './common'
+import info from './info'
+import account from './account'
 
 export default {
-  welcome: '欢迎',
   ...common,
+  ...info,
+  ...account
 }
