@@ -30,23 +30,22 @@ import schema from './src/graphql'
   database.init()
 
   app.use(middleware)
+  app.use(bodyParser())
 
-  app.use(async (ctx) => {
+  apolloServer.applyMiddleware({ app })
+
+  app.use(async (ctx, next) => {
     const { request: { url = '' } = {} } = ctx
-
-    if (url.indexOf('api') === -1) {
+    if (url.indexOf('graphql') === -1) {
       const filename = resolve(webpackConfig.output.path, 'index.html')
       ctx.response.type = 'html'
       ctx.response.body = middleware.devMiddleware.fileSystem.createReadStream(filename)
     }
+    next()
   });
-
-  app.use(bodyParser())
 
   app.use(router.routes())
     .use(router.allowedMethods())
-
-  apolloServer.applyMiddleware({ app })
 
   app.listen(port, host, null, () => {
     console.info(`Server lunched: http://${host}:${port}`)

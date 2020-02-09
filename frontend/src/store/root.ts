@@ -10,8 +10,6 @@ const locales = {
   [LANGUAGE.ZH_CN]: zh_CN
 }
 
-console.log(locales)
-
 export interface IRootStore {
   languageInited: boolean
   currentLanguage: string

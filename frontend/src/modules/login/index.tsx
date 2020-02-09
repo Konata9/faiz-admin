@@ -1,12 +1,17 @@
 import * as React from 'react'
 import { Card, Form, Input, Button, Icon } from 'antd'
 import { FormComponentProps } from 'antd/lib/form'
+import { inject, observer } from 'mobx-react'
 
 import styled from 'styled-components'
 import { StyledLayout } from '../style/layout'
 import { fontDark } from '../style/style'
 
 import { formatMessage } from '../../utils'
+
+import { IStore } from '../../store'
+import { IUserStore } from '../../store/user'
+import { IAccount } from '../../interface/user'
 
 const CardWrapper = styled.div`
   width: 600px;
@@ -21,14 +26,21 @@ const CardTitle = styled.div`
 `
 
 type LoginForm = FormComponentProps
-const Login = Form.create()((props: LoginForm) => {
 
-  const { form: { getFieldDecorator, validateFields } } = props
+interface IProps extends FormComponentProps {
+  userStore: IUserStore
+}
 
-  const login = () => {
-    validateFields((error, values) => {
+const LoginForm = Form.create()(({ form, userStore }: IProps) => {
+
+  const { getFieldDecorator, validateFields } = form
+  const { login } = userStore
+
+  const doUserLogin = () => {
+    validateFields((error, values: IAccount) => {
       if (!error) {
-        console.log(values)
+        const { username, password } = values
+        login({ username, password })
       }
     })
   }
@@ -63,7 +75,7 @@ const Login = Form.create()((props: LoginForm) => {
               }
             </Form.Item>
             <Form.Item>
-              <Button type="primary" size="large" block onClick={login}>{formatMessage('system.login')}</Button>
+              <Button type="primary" size="large" block onClick={doUserLogin}>{formatMessage('system.login')}</Button>
             </Form.Item>
           </Form>
         </Card>
@@ -71,5 +83,13 @@ const Login = Form.create()((props: LoginForm) => {
     </StyledLayout>
   )
 })
+
+const Login = inject((stores: IStore) => {
+  return {
+    userStore: stores.userStore
+  }
+})(
+  observer(LoginForm)
+)
 
 export default Login

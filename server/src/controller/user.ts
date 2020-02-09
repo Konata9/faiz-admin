@@ -1,4 +1,17 @@
-import UserModel from '../database/schema/user'
+import { UserModel } from '../database/schema/user'
+
+export interface IAccount {
+  username: string
+  password: string
+}
+
+export async function checkUserExist({ username, password }: IAccount) {
+  try {
+    return await UserModel.exists({ username, password })
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 export async function getUsers() {
   try {
