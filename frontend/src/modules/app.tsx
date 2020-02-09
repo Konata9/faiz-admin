@@ -20,8 +20,7 @@ const App = inject((stores: IStore) => {
 })(
   observer(
     ({ rootStore }: IProps) => {
-      const { languageInited, currentLanguage } = rootStore || {}
-      console.log('currentLanguage', currentLanguage)
+      const { languageInited } = rootStore || {}
 
       if (!languageInited) {
         return (

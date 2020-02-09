@@ -2,6 +2,7 @@ import 'reflect-metadata'
 import { resolve } from 'path'
 
 import * as Koa from 'koa'
+import jwt from 'koa-jwt'
 import * as bodyParser from 'koa-bodyparser'
 import { ApolloServer } from 'apollo-server-koa'
 
