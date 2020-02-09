@@ -1,7 +1,7 @@
 import { Resolver, Query, Arg } from 'type-graphql'
 import UserSchema from '../schema/user'
 
-import { checkUserExist, getUsers } from '../../controller/user'
+import { checkUserExist, getUsers, getUser } from '../../controller/user'
 
 @Resolver(UserSchema)
 class UserResolver {
@@ -17,6 +17,14 @@ class UserResolver {
   @Query(returns => [UserSchema])
   async users() {
     return await getUsers()
+  }
+
+  @Query(returns => UserSchema)
+  async user(
+    @Arg('username') username: string,
+    @Arg('password') password: string
+  ) {
+    return await getUser({})
   }
 }
 

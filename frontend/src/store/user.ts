@@ -1,6 +1,6 @@
 import { action } from 'mobx'
-// import { gql } from 'graphql'
-import client from '../client'
+import { gql } from 'apollo-boost'
+import client, { queryGQL } from '../client'
 
 import { IAccount } from '../interface/user'
 
@@ -8,20 +8,18 @@ export interface IUserStore {
   login: (account: IAccount) => {}
 }
 
-// const loginQuery = gql`
-//   Query{
-//     checkUserExist
-//   }
-// `
-
 class UserStore {
 
   @action
   async login(account: IAccount) {
     const { username, password } = account
-    console.log('account', account)
+    const loginQuery = gql`{
+      checkUserExist(username: "${username}", password: "${password}")
+    }`
 
-    // client.query()
+    console.log('account', account)
+    const { data: { checkUserExist } } = await queryGQL(loginQuery) || {}
+    console.log('result', checkUserExist)
   }
 }
 

@@ -1,4 +1,4 @@
-import ApolloClient from 'apollo-boost'
+import ApolloClient, { DocumentNode } from 'apollo-boost'
 
 import CONFIG from '../config'
 
@@ -9,5 +9,13 @@ const client = new ApolloClient({
     credentials: 'include'
   },
 })
+
+export const queryGQL = async (query: DocumentNode) => {
+  try {
+    return await client.query({ query })
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 export default client
