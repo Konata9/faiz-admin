@@ -37,8 +37,6 @@ import schema from './src/graphql'
     schema,
     context: ({ ctx }: { ctx: Koa.Context }) => {
       const { request: { headers } } = ctx
-      console.log(ctx)
-
       const token = headers.authorization || ''
       const user = getUser(token)
       return { user, models: {} }
@@ -53,15 +51,10 @@ import schema from './src/graphql'
 
   apolloServer.applyMiddleware({ app, path: gqlPath })
 
-  app.use(async (ctx, next) => {
-    const { request: { url = '' } = {} } = ctx
-    console.log('ctx', ctx)
-    if (url.indexOf('graphql') === -1) {
-      const filename = resolve(webpackConfig.output.path, 'index.html')
-      ctx.response.type = 'html'
-      ctx.response.body = middleware.devMiddleware.fileSystem.createReadStream(filename)
-    }
-    next()
+  app.use((ctx) => {
+    const filename = resolve(webpackConfig.output.path, 'index.html')
+    ctx.response.type = 'html'
+    ctx.response.body = middleware.devMiddleware.fileSystem.createReadStream(filename)
   });
 
   app.listen(port, host, null, () => {
