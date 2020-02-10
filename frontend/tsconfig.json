@@ -4,7 +4,7 @@
     "module": "commonjs",
     "outDir": "./dist",
     "lib": [
-      "es2015",
+      "ES2015",
       "dom"
     ],
     "paths": {
