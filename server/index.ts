@@ -1,13 +1,14 @@
+import 'module-alias/register'
 import 'reflect-metadata'
 import express from 'express'
 import jsonwebtoken from 'jsonwebtoken'
 import bodyParser from 'body-parser'
 import { ApolloServer } from 'apollo-server-express'
 
-import CONFIG from './config'
+import CONFIG from '@config'
 
-import Database from './src/database'
-import schema from './src/graphql'
+import Database from '@database'
+import schema from '@graphql'
 
 (async function () {
   const { server: { port, host }, gqlPath, auth: { secret } } = CONFIG

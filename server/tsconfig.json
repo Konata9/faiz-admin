@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "module": "commonjs",
     "noImplicitAny": true,
     "outDir": "./dist",
@@ -7,6 +8,53 @@
       "es2016",
       "esnext.asynciterable"
     ],
+    "paths": {
+      "@config/*": [
+        "./config/*"
+      ],
+      "@config": [
+        "./config/index"
+      ],
+      "@src/*": [
+        "./src/*"
+      ],
+      "@constants/*": [
+        "./src/constants/*"
+      ],
+      "@constants": [
+        "./src/constants/index"
+      ],
+      "@controller/*": [
+        "./src/controller/*"
+      ],
+      "@controller": [
+        "./src/controller/index"
+      ],
+      "@database/*": [
+        "./src/database/*"
+      ],
+      "@database": [
+        "./src/database/index"
+      ],
+      "@graphql/*": [
+        "./src/graphql/*"
+      ],
+      "@graphql": [
+        "./src/graphql/index"
+      ],
+      "@router/*": [
+        "./src/router/*"
+      ],
+      "@router": [
+        "./src/router/index"
+      ],
+      "@utils/*": [
+        "./src/utils/*"
+      ],
+      "@utils": [
+        "./src/utils/index"
+      ]
+    },
     "target": "es2016",
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
