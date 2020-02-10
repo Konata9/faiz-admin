@@ -1,9 +1,8 @@
 import 'reflect-metadata'
-import * as Koa from 'koa'
-import * as jwt from 'koa-jwt'
-import * as jsonwebtoken from 'jsonwebtoken'
-import * as bodyParser from 'koa-bodyparser'
-import { ApolloServer } from 'apollo-server-koa'
+import express from 'express'
+import jsonwebtoken from 'jsonwebtoken'
+import bodyParser from 'body-parser'
+import { ApolloServer } from 'apollo-server-express'
 
 import CONFIG from './config'
 
@@ -23,11 +22,11 @@ import schema from './src/graphql'
     }
   }
 
-  const app = new Koa()
+  const app = express()
   const apolloServer = new ApolloServer({
     schema,
-    context: ({ ctx }: { ctx: Koa.Context }) => {
-      const { request: { headers } } = ctx
+    context: ({ req }: { req: express.Request }) => {
+      const { headers } = req
       const token = headers.authorization || ''
       const user = getUser(token)
       return { user }
@@ -37,7 +36,7 @@ import schema from './src/graphql'
   const database = new Database()
   database.init()
 
-  app.use(bodyParser())
+  app.use(bodyParser.json())
 
   apolloServer.applyMiddleware({ app, path: gqlPath })
 
