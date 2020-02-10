@@ -2,15 +2,15 @@ import 'react-hot-loader'
 import 'normalize.css'
 import 'antd/dist/antd.css';
 
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import React from 'react'
+import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { Provider } from 'mobx-react'
 
 import client from './client'
-import store from './store'
-import App from './modules/app'
+import store from '@store'
+import App from '@modules/app'
 
 ReactDOM.render(
   <Provider {...store}>

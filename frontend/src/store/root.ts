@@ -1,4 +1,4 @@
-import * as intl from 'react-intl-universal'
+import intl from 'react-intl-universal'
 import { observable, action } from 'mobx'
 
 import { LANGUAGE, LANGUAGE_STORE_KEY } from '../constants'

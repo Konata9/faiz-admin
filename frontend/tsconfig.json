@@ -1,11 +1,59 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "module": "commonjs",
     "outDir": "./dist",
     "lib": [
       "es2015",
       "dom"
     ],
+    "paths": {
+      "@config/*": [
+        "./config/*"
+      ],
+      "@config": [
+        "./config/index"
+      ],
+      "@locale/*": [
+        "./locale/*"
+      ],
+      "@public/*": [
+        "./public/*"
+      ],
+      "@src/*": [
+        "./src/*"
+      ],
+      "@src": [
+        "./src/index"
+      ],
+      "@constants/*": [
+        "./src/constants/*"
+      ],
+      "@constants": [
+        "./src/constants/index"
+      ],
+      "@interface/*": [
+        "./src/interface/*"
+      ],
+      "@interface": [
+        "./src/interface/index"
+      ],
+      "@modules/*": [
+        "./src/modules/*"
+      ],
+      "@store/*": [
+        "./src/store/*"
+      ],
+      "@store": [
+        "./src/store/index"
+      ],
+      "@utils/*": [
+        "./src/utils/*"
+      ],
+      "@utils": [
+        "./src/utils/index"
+      ]
+    },
     "target": "es5",
     "jsx": "react",
     "types": [
@@ -14,10 +62,16 @@
     ],
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
+    "esModuleInterop": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
     "pretty": true,
     "strictNullChecks": true,
     "sourceMap": true,
-  }
+  },
+  "include": [
+    "./config/**/*",
+    "./locale/**/*",
+    "./src/**/*"
+  ]
 }

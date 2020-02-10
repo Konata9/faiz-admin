@@ -1,4 +1,4 @@
-import * as intl from 'react-intl-universal'
+import intl from 'react-intl-universal'
 
 export const formatMessage = (id: string, value: any = null) => {
   return intl.get(id, value)

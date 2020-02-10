@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { Card, Form, Input, Button, Icon } from 'antd'
 import { FormComponentProps } from 'antd/lib/form'
 import { inject, observer } from 'mobx-react'
