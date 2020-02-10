@@ -3,7 +3,7 @@
     "baseUrl": ".",
     "module": "commonjs",
     "noImplicitAny": true,
-    "outDir": "./dist",
+    "outDir": "dist/",
     "lib": [
       "es2016",
       "esnext.asynciterable"

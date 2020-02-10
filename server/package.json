@@ -4,7 +4,9 @@
   "description": "server for faiz admin",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node ./index.ts"
+    "dev": "npx nodemon",
+    "dev:serve": "ts-node ./index.ts",
+    "build": "tsc --project ./tsconfig.json"
   },
   "keywords": [],
   "author": "Konata9",
