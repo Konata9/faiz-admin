@@ -1,14 +1,9 @@
 import 'reflect-metadata'
-import { resolve } from 'path'
-
 import * as Koa from 'koa'
 import * as jwt from 'koa-jwt'
 import * as jsonwebtoken from 'jsonwebtoken'
 import * as bodyParser from 'koa-bodyparser'
 import { ApolloServer } from 'apollo-server-koa'
-
-import * as webpack from 'webpack'
-import * as koaWebpack from 'koa-webpack'
 
 import CONFIG from './config'
 
@@ -17,10 +12,6 @@ import schema from './src/graphql'
 
 (async function () {
   const { server: { port, host }, gqlPath, auth: { secret } } = CONFIG
-
-  const webpackConfig = require(resolve(__dirname, '../webpack/webpack.dev.config.js'))
-  const compiler = webpack(webpackConfig)
-  const middleware = await koaWebpack({ compiler })
 
   const getUser = (token: string) => {
     try {
@@ -39,23 +30,16 @@ import schema from './src/graphql'
       const { request: { headers } } = ctx
       const token = headers.authorization || ''
       const user = getUser(token)
-      return { user, models: {} }
+      return { user }
     }
   })
 
   const database = new Database()
   database.init()
 
-  app.use(middleware)
   app.use(bodyParser())
 
   apolloServer.applyMiddleware({ app, path: gqlPath })
-
-  app.use((ctx) => {
-    const filename = resolve(webpackConfig.output.path, 'index.html')
-    ctx.response.type = 'html'
-    ctx.response.body = middleware.devMiddleware.fileSystem.createReadStream(filename)
-  });
 
   app.listen(port, host, null, () => {
     console.info(`Server lunched: http://${host}:${port}`)
