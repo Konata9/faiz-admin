@@ -2,7 +2,8 @@ import 'reflect-metadata'
 import { resolve } from 'path'
 
 import * as Koa from 'koa'
-import jwt from 'koa-jwt'
+import * as jwt from 'koa-jwt'
+import * as jsonwebtoken from 'jsonwebtoken'
 import * as bodyParser from 'koa-bodyparser'
 import { ApolloServer } from 'apollo-server-koa'
 
@@ -12,19 +13,37 @@ import * as koaWebpack from 'koa-webpack'
 import CONFIG from './config'
 
 import Database from './src/database'
-import router from './src/router'
-
 import schema from './src/graphql'
 
 (async function () {
-  const { server: { port, host } } = CONFIG
+  const { server: { port, host }, gqlPath, auth: { secret } } = CONFIG
 
   const webpackConfig = require(resolve(__dirname, '../webpack/webpack.dev.config.js'))
   const compiler = webpack(webpackConfig)
   const middleware = await koaWebpack({ compiler })
 
+  const getUser = (token: string) => {
+    try {
+      if (token) {
+        return jsonwebtoken.verify(token, secret)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   const app = new Koa()
-  const apolloServer = new ApolloServer({ schema })
+  const apolloServer = new ApolloServer({
+    schema,
+    context: ({ ctx }: { ctx: Koa.Context }) => {
+      const { request: { headers } } = ctx
+      console.log(ctx)
+
+      const token = headers.authorization || ''
+      const user = getUser(token)
+      return { user, models: {} }
+    }
+  })
 
   const database = new Database()
   database.init()
@@ -32,10 +51,11 @@ import schema from './src/graphql'
   app.use(middleware)
   app.use(bodyParser())
 
-  apolloServer.applyMiddleware({ app })
+  apolloServer.applyMiddleware({ app, path: gqlPath })
 
   app.use(async (ctx, next) => {
     const { request: { url = '' } = {} } = ctx
+    console.log('ctx', ctx)
     if (url.indexOf('graphql') === -1) {
       const filename = resolve(webpackConfig.output.path, 'index.html')
       ctx.response.type = 'html'
@@ -43,9 +63,6 @@ import schema from './src/graphql'
     }
     next()
   });
-
-  app.use(router.routes())
-    .use(router.allowedMethods())
 
   app.listen(port, host, null, () => {
     console.info(`Server lunched: http://${host}:${port}`)

@@ -18,14 +18,6 @@ class UserResolver {
   async users() {
     return await getUsers()
   }
-
-  @Query(returns => UserSchema)
-  async user(
-    @Arg('username') username: string,
-    @Arg('password') password: string
-  ) {
-    return await getUser({})
-  }
 }
 
 export default UserResolver

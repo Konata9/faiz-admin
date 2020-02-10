@@ -13,5 +13,10 @@ export default {
     host: DB_HOST || '127.0.0.1',
     port: DB_PORT || 27017,
     dbname: DB_NAME || 'faizAdmin'
+  },
+  gqlPath: '/graphql',
+  auth: {
+    secret: 'ARTAfgdoV2',
+    experies: 60 * 60 * 24
   }
 }
