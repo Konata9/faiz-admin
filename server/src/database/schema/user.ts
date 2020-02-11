@@ -1,16 +1,6 @@
-import { prop, arrayProp, Typegoose } from 'typegoose'
-import * as mongoose from 'mongoose'
+import { prop, arrayProp, getModelForClass } from '@typegoose/typegoose'
 
-const Schema = mongoose.Schema
-export const UserSchema = new Schema({
-  username: String,
-  password: String,
-  role: [String],
-  createTime: { type: Date, default: Date.now },
-  updateTime: { type: Date, default: Date.now }
-})
-
-class User extends Typegoose {
+class User {
   @prop()
   username: string
 
@@ -27,4 +17,4 @@ class User extends Typegoose {
   updateTime: Date
 }
 
-export const UserModel = new User().getModelForClass(User)
+export const UserModel = getModelForClass(User)

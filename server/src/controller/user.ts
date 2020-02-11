@@ -30,9 +30,9 @@ export async function findUser(condition: IAccount) {
   }
 }
 
-export async function createUser(userInfo: any) {
+export async function createUser(userInfo: IAccount) {
   try {
-    await UserModel.create(userInfo)
+    return await UserModel.create(userInfo)
   } catch (error) {
     console.error(error)
   }
