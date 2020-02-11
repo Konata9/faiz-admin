@@ -24,9 +24,6 @@ class RootStore {
   @observable
   currentLanguage = DEFAULT_LANGUAGE
 
-  @observable
-  isLogin = false
-
   constructor() {
     this.loadLocales()
   }

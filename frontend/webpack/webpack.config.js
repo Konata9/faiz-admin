@@ -1,6 +1,9 @@
 const path = require('path')
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+
+const { env: { SERVER_HOST, SERVER_PORT, APOLLO_HOST, APOLLO_PORT, APOLLO_PATH } } = process
 
 module.exports = {
   entry: [
@@ -21,6 +24,7 @@ module.exports = {
       "@interface": path.resolve(__dirname, '../src/interface'),
       "@modules": path.resolve(__dirname, '../src/modules'),
       "@store": path.resolve(__dirname, '../src/store'),
+      "@service": path.resolve(__dirname, '../src/service'),
       "@utils": path.resolve(__dirname, '../src/utils')
     },
     extensions: [".tsx", ".ts", ".js",],
@@ -49,6 +53,15 @@ module.exports = {
       title: 'Faiz Admin',
       template: path.resolve(__dirname, '../index.html'),
       inject: true
+    }),
+    new webpack.DefinePlugin({
+      "process.env": {
+        SERVER_HOST,
+        SERVER_PORT,
+        APOLLO_HOST,
+        APOLLO_PORT,
+        APOLLO_PATH
+      }
     })
   ]
 }

@@ -1,6 +1,4 @@
-import { action } from 'mobx'
-import { gql } from 'apollo-boost'
-import client, { queryGQL } from '../client'
+import { observable, action } from 'mobx'
 
 import { IAccount } from '../interface/user'
 
@@ -10,16 +8,20 @@ export interface IUserStore {
 
 class UserStore {
 
+  @observable
+  userInfo = {}
+
+  @observable
+  token = ''
+
+  @observable
+  isLogin = false
+
   @action
   async login(account: IAccount) {
     const { username, password } = account
-    const loginQuery = gql`{
-      checkUserExist(username: "${username}", password: "${password}")
-    }`
 
     console.log('account', account)
-    const { data: { checkUserExist } } = await queryGQL(loginQuery) || {}
-    console.log('result', checkUserExist)
   }
 }
 
