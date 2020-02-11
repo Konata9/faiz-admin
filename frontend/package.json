@@ -4,7 +4,7 @@
   "description": "Admin system boilerplate by React, Koa, MongoDB and GraphQL.",
   "main": "index.js",
   "scripts": {
-    "dev:front": "npx webpack-dev-server --progress --config ./webpack/webpack.dev.config.js"
+    "dev": "npx webpack-dev-server --progress --config ./webpack/webpack.dev.config.js"
   },
   "keywords": [
     "admin",
