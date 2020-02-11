@@ -17,7 +17,7 @@ router.post('/login', [
         const token = generateJWT({ id, username })
         res.json({ token })
       } else {
-        res.send({ code: ERROR_CODE.USER_NOT_EXIST })
+        res.send({ code: ERROR_CODE.USER_NOT_EXIST }).end()
       }
     } catch (error) {
       // TODO with error
@@ -32,10 +32,15 @@ router.post('/signup', [
     const { body: { username, password } } = req
     try {
       // TODO with the password
-      const user = await createUser({ username, password: '233' })
-      const { _id: id } = user
-      const token = generateJWT({ id, username })
-      res.json({ token })
+      const user = await findUser({ username })
+      if (user) {
+        res.send({ code: ERROR_CODE.USER_EXISTED }).end()
+      } else {
+        const newUser = await createUser({ username, password })
+        const { _id: id } = newUser
+        const token = generateJWT({ id, username })
+        res.json({ token }).end()
+      }
     } catch (error) {
       // TODO with error
       res.send(error)
