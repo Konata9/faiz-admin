@@ -6,7 +6,7 @@ import { inject, observer } from 'mobx-react'
 import { IStore, IRootStore } from '../store'
 
 import { StyledLayout } from './style/layout'
-import Layout from './layout'
+import Layout from './layout/index'
 import Login from './login/index'
 
 interface IProps {

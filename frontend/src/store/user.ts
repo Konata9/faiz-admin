@@ -3,6 +3,9 @@ import { observable, action } from 'mobx'
 import { IAccount } from '../interface/user'
 
 export interface IUserStore {
+  userInfo: {}
+  token: string
+  isLogin: boolean
   login: (account: IAccount) => {}
 }
 

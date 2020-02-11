@@ -13,7 +13,6 @@ const locales = {
 export interface IRootStore {
   languageInited: boolean
   currentLanguage: string
-  isLogin: boolean
 }
 
 class RootStore {
