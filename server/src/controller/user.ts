@@ -1,20 +1,20 @@
 import { UserModel } from '../database/schema/user'
 
 export interface IAccount {
-  userId?: string
+  id?: string
   username?: string
   password?: string
 }
 
-export async function checkUserExist({ username, password }: IAccount) {
+export async function checkUserExist(condition: IAccount) {
   try {
-    return await UserModel.exists({ username, password })
+    return await UserModel.exists({ ...condition })
   } catch (error) {
     console.error(error)
   }
 }
 
-export async function getUsers() {
+export async function findUsers() {
   try {
     return await UserModel.find()
   } catch (error) {
@@ -22,7 +22,7 @@ export async function getUsers() {
   }
 }
 
-export async function getUser(condition: IAccount) {
+export async function findUser(condition: IAccount) {
   try {
     return await UserModel.findOne({ ...condition })
   } catch (error) {

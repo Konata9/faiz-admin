@@ -3,6 +3,9 @@ import { ObjectType, Field } from 'type-graphql'
 @ObjectType()
 class UserSchema {
   @Field()
+  id: string
+
+  @Field()
   username: string
 
   @Field()
