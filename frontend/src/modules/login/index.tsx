@@ -5,13 +5,13 @@ import { inject, observer } from 'mobx-react'
 
 import styled from 'styled-components'
 import { StyledLayout } from '../style/layout'
-import { fontDark } from '../style/style'
+import { fontDark } from '../style/color'
 
-import { formatMessage } from '../../utils'
+import { formatMessage } from '@utils'
 
-import { IStore } from '../../store'
-import { IUserStore } from '../../store/user'
-import { IAccount } from '../../interface/user'
+import { IStore } from '@store'
+import { IUserStore } from '@store/user'
+import { IAccount } from '@interface/user'
 
 const CardWrapper = styled.div`
   width: 600px;

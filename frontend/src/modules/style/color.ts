@@ -3,6 +3,8 @@ export const fontDark = '#2c3e50'
 export const fontDarkLight = '#34495e'
 
 export const bgLight = '#ecf0f1'
+export const bgDark = '#001529'
+export const bgWhite = '#ffffff'
 export const bgBlue = '#2980b9'
 
 export const borderGray = '#bdc3c7'

@@ -1,17 +1,34 @@
 import React from 'react'
+import { inject, observer } from 'mobx-react'
 import { Menu } from 'antd'
 import { MenuWrapper } from './style'
+import Logo from './logo'
 
-const MenuList = () => {
-  return (
-    <MenuWrapper>
-      <Menu theme="dark">
-        <Menu.SubMenu>
+import { IStore, IRootStore } from '@store'
 
-        </Menu.SubMenu>
-      </Menu>
-    </MenuWrapper>
-  )
+interface IProps {
+  rootStore?: IRootStore
 }
+
+const MenuList = inject((stores: IStore) => {
+  return {
+    rootStore: stores.rootStore
+  }
+})(
+  observer(
+    (props: IProps) => {
+      return (
+        <MenuWrapper>
+          <Logo />
+          <Menu theme="dark">
+            <Menu.SubMenu>
+
+            </Menu.SubMenu>
+          </Menu>
+        </MenuWrapper>
+      )
+    }
+  )
+)
 
 export default MenuList

@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import { bgLight, fontLight } from './style'
+import { bgLight, fontLight } from './color'
+import { Link } from 'react-router-dom'
 
 export const StyledLayout = styled.div`
   width: 100vw;
@@ -10,10 +11,10 @@ export const StyledLayout = styled.div`
   display: flex;
 `
 
-export const LayoutLeftWrapper = styled.div`
-  flex: 1;
-`
+export const RouterLink = styled(Link)`
+  color: ${fontLight};
 
-export const LayoutRightWrapper = styled.div`
-  flex: 1;
+  &:hover{
+    color: ${fontLight}
+  }
 `

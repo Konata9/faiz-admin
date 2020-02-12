@@ -1,8 +1,11 @@
 import React from 'react'
+import { ContentWrapper } from './style'
 
 const Content = () => {
   return (
-    <div>This is content</div>
+    <ContentWrapper>
+      <div>This is content</div>
+    </ContentWrapper>
   )
 }
 

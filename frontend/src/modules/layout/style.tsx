@@ -1,9 +1,35 @@
 import styled from 'styled-components'
+import { bgDark, bgWhite, fontDark } from '@modules/style/color'
+
+const headerHeight = '64px'
+
+export const SideBar = styled.div`
+  
+`
+
+export const Container = styled.div`
+  flex: 1;
+`
+
+export const LogoWrapper = styled.div`
+  width: 100%;
+  height: ${headerHeight};
+  line-height: ${headerHeight};
+  font-size: 2rem;
+  text-align: center;
+`
 
 export const MenuWrapper = styled.div`
+  width: 256px;
+  height: 100%;
+  background: ${bgDark}
 `
 
 export const HeaderWrapper = styled.div`
+  width: 100%;
+  height: ${headerHeight};
+  color: ${fontDark};
+  background: ${bgWhite};
 `
 
 export const ContentWrapper = styled.div`

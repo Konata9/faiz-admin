@@ -1,8 +1,11 @@
 import React from 'react'
+import { HeaderWrapper } from './style'
 
 const Header = () => {
   return (
-    <div>This is Header</div>
+    <HeaderWrapper>
+      <div>This is Header</div>
+    </HeaderWrapper>
   )
 }
 
