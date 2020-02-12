@@ -1,9 +1,17 @@
 import React from 'react'
+import { Menu } from 'antd'
+import { MenuWrapper } from './style'
 
-const Menu = () => {
+const MenuList = () => {
   return (
-    <div>Menu Bar</div>
+    <MenuWrapper>
+      <Menu theme="dark">
+        <Menu.SubMenu>
+
+        </Menu.SubMenu>
+      </Menu>
+    </MenuWrapper>
   )
 }
 
-export default Menu
+export default MenuList

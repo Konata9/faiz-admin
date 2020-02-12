@@ -13,6 +13,7 @@ const locales = {
 export interface IRootStore {
   languageInited: boolean
   currentLanguage: string
+  menuList: Array<any>
 }
 
 class RootStore {
@@ -22,6 +23,9 @@ class RootStore {
 
   @observable
   currentLanguage = DEFAULT_LANGUAGE
+
+  @observable
+  menuList = []
 
   constructor() {
     this.loadLocales()
@@ -41,6 +45,11 @@ class RootStore {
   switchLanguage(language: string) {
     this.currentLanguage = Object.values(LANGUAGE).includes(language) ? language : DEFAULT_LANGUAGE
     this.loadLocales()
+  }
+
+  @action
+  getMenuList() {
+    this.menuList = []
   }
 }
 

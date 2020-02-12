@@ -3,7 +3,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 
-import { IStore, IRootStore } from '../store'
+import { IStore, IRootStore } from '@store'
 
 import { StyledLayout } from './style/layout'
 import Layout from './layout/index'

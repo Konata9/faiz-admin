@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyledLayout, ContentWrapper } from '../style/layout'
+import { StyledLayout } from '../style/layout'
 
 import Menu from './menu'
 import Header from './header'
@@ -9,12 +9,8 @@ const Layout = () => {
   return (
     <StyledLayout>
       <Menu />
-      <div>
-        <Header />
-        <ContentWrapper>
-          <Content />
-        </ContentWrapper>
-      </div>
+      <Header />
+      <Content />
     </StyledLayout>
   )
 }
