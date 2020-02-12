@@ -6,6 +6,7 @@ import { inject, observer } from 'mobx-react'
 import { IStore, IRootStore } from '@store'
 
 import { StyledLayout } from './style/layout'
+
 import Layout from './layout/index'
 import Login from './login/index'
 
@@ -31,7 +32,7 @@ const App = inject((stores: IStore) => {
       return (
         <Switch>
           <Route path="/login" component={Login} exact />
-          <Route path="/" component={Layout} exact />
+          <Route path="/" component={Layout} />
         </Switch>
       )
     }

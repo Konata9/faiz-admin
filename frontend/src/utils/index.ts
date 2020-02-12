@@ -5,11 +5,11 @@ import CONFIG from '@config'
 const { crypto: { secret } } = CONFIG
 
 export const formatMessage = (id: string, value: any = null) => {
-  return intl.get(id, value)
+  return intl.get(id, value) || id
 }
 
 export const formatHTMLMessage = (id: string, value: any = null) => {
-  return intl.getHTML(id, value)
+  return intl.getHTML(id, value) || id
 }
 
 export const generateSign = (rawValue: any) => {

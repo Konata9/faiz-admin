@@ -28,7 +28,7 @@ const CardTitle = styled.div`
 type LoginForm = FormComponentProps
 
 interface IProps extends FormComponentProps {
-  userStore: IUserStore
+  userStore: IUserStore,
 }
 
 const LoginForm = Form.create()(({ form, userStore }: IProps) => {

@@ -6,6 +6,7 @@ import { MenuWrapper } from './style'
 import Logo from './logo'
 
 import { IStore, IRootStore } from '@store'
+import { formatMessage } from '@utils'
 
 const menuList = [
   {
@@ -16,12 +17,12 @@ const menuList = [
     name: 'system',
     submenu: [
       {
-        name: 'user',
-        link: '/user'
+        name: 'system_user',
+        link: '/system/user'
       },
       {
-        name: 'role',
-        link: '/role'
+        name: 'system_role',
+        link: '/system/role'
       }
     ]
   }
@@ -39,18 +40,18 @@ const MenuList = inject((stores: IStore) => {
   observer(
     (props: IProps) => {
       const createMenuList = (menuList: Array<any>): any => {
-        return menuList.map(menu => {
-          const { submenu = [], name, link = '' } = menu
-          if (submenu.length > 0) {
+        return menuList.map((menu, index) => {
+          const { submenu, name, link = '' } = menu
+          if (submenu) {
             return (
-              <Menu.SubMenu title={name} >
+              <Menu.SubMenu title={formatMessage(`menu.${name}`)} key={`${name}_${index}`} >
                 {...createMenuList(submenu)}
               </Menu.SubMenu>
             )
           } else {
             return (
-              <Menu.Item>
-                <RouterLink to={link}>{name}</RouterLink>
+              <Menu.Item key={`${name}_${index}`}>
+                <RouterLink to={link}>{formatMessage(`menu.${name}`)}</RouterLink>
               </Menu.Item>
             )
           }
