@@ -1,10 +1,11 @@
 import React from 'react'
-import { Card } from 'antd'
+import { Card, Table } from 'antd'
 
 const User = () => {
   return (
     <Card>
       This is user list.
+      <Table />
     </Card>
   )
 }

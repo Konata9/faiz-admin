@@ -28,8 +28,12 @@ export const MenuWrapper = styled.div`
 export const HeaderWrapper = styled.div`
   width: 100%;
   height: ${headerHeight};
+  line-height: ${headerHeight};
+  padding: 0 20px;
   color: ${fontDark};
   background: ${bgWhite};
+  display: flex;
+  justify-content: space-between;
 `
 
 export const ContentWrapper = styled.div`
