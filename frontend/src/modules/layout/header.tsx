@@ -1,42 +1,61 @@
 import React from 'react'
 import { Dropdown, Menu, Avatar, Icon } from 'antd'
+import { inject, observer } from 'mobx-react'
+import Breadcrumb from './breadcrumb'
+
+import { formatMessage } from '@utils'
+import { IStore, IUserStore } from '@store'
 import { HeaderWrapper } from './style'
 import { RouterLink } from '@modules/style/layout'
-import Breadcrumb from './breadcrumb'
+
+interface IProps {
+  userStore?: IUserStore
+}
+
+const iconStyle = {
+  marginRight: '15px'
+}
 
 const dropdownMenu = (
   <Menu>
     <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
-        1st menu item
-      </a>
+      <RouterLink to="/">
+        <Icon type="user" style={iconStyle} />
+        {formatMessage('account_center')}
+      </RouterLink>
     </Menu.Item>
     <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
-        2nd menu item
-      </a>
-    </Menu.Item>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
-        3rd menu item
-      </a>
+      <RouterLink to="/">
+        <Icon type="logout" style={iconStyle} />
+        {formatMessage('system.logout')}
+      </RouterLink>
     </Menu.Item>
   </Menu>
 )
 
-const Header = () => {
-  return (
-    <>
-      <HeaderWrapper>
-        <Dropdown overlay={dropdownMenu} placement="bottomRight">
-          <div>
-            <Avatar icon="user" />233
-          </div>
-        </Dropdown>
-      </HeaderWrapper>
-      <Breadcrumb />
-    </>
+const Header = inject((stores: IStore) => {
+  return {
+    userStore: stores.userStore
+  }
+})(
+  observer(
+    ({ userStore }: IProps) => {
+      const { userInfo } = userStore || { userInfo: {} }
+
+      return (
+        <>
+          <HeaderWrapper>
+            <Dropdown overlay={dropdownMenu} placement="bottomRight">
+              <div>
+                <Avatar icon="user" />233
+              </div>
+            </Dropdown>
+          </HeaderWrapper>
+          <Breadcrumb />
+        </>
+      )
+    }
   )
-}
+)
 
 export default Header

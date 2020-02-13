@@ -1,6 +1,10 @@
 import styled from 'styled-components'
-import { bgLight, fontLight } from './color'
-import { Link } from 'react-router-dom'
+import { bgLight, fontLight, fontDark } from './color'
+import { Link, LinkProps } from 'react-router-dom'
+
+interface IRouterLink extends LinkProps {
+  color?: string
+}
 
 export const StyledLayout = styled.div`
   width: 100vw;
@@ -12,9 +16,13 @@ export const StyledLayout = styled.div`
 `
 
 export const RouterLink = styled(Link)`
-  color: ${fontLight};
+  color: ${
+  ({ color = fontDark }: IRouterLink) => color
+  };
 
   &:hover{
-    color: ${fontLight}
+    color: ${
+  ({ color = fontDark }: IRouterLink) => color
+  };
   }
 `
