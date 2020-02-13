@@ -4,7 +4,15 @@ import Dashboard from '@modules/dashboard'
 import User from '@modules/system/user'
 import Role from '@modules/system/role'
 
-const routes = [
+export interface IRouter {
+  path: string
+  component: JSX.Element | React.ReactNode
+  exact?: boolean
+  meta?: any
+  routes?: IRouter[]
+}
+
+const routes: Array<IRouter> = [
   {
     path: '/login',
     component: Login

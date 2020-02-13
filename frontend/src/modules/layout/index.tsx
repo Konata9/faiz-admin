@@ -2,11 +2,17 @@ import React from 'react'
 import { StyledLayout } from '@modules/style/layout'
 import { SideBar, Container } from './style'
 
+import { IRouter } from '@modules/routes'
+
 import Menu from './menu'
 import Header from './header'
 import Content from './content'
 
-const Layout = ({ routes }: any) => {
+interface IProps {
+  routes: IRouter[]
+}
+
+const Layout = ({ routes }: IProps) => {
   return (
     <StyledLayout>
       <SideBar>

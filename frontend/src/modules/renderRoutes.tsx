@@ -1,7 +1,8 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
+import { IRouter } from '@modules/routes'
 
-const RenderRoutes = ({ routes }: { routes: Array<any> }) => {
+const RenderRoutes = ({ routes }: { routes: Array<IRouter> }) => {
   return (
     <Switch>
       {
