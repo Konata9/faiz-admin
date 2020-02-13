@@ -1,5 +1,4 @@
 import { observable, action } from 'mobx'
-
 import { IAccount } from '../interface/user'
 
 export interface IUserStore {
@@ -25,6 +24,11 @@ class UserStore {
     const { username, password } = account
 
     console.log('account', account)
+  }
+
+  @action
+  async logout() {
+
   }
 }
 

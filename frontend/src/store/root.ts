@@ -14,6 +14,7 @@ export interface IRootStore {
   languageInited: boolean
   currentLanguage: string
   menuList: Array<any>
+  currentMenu: string
 }
 
 class RootStore {
@@ -26,6 +27,9 @@ class RootStore {
 
   @observable
   menuList = []
+
+  @observable
+  currentMenu = ''
 
   constructor() {
     this.loadLocales()

@@ -1,8 +1,9 @@
 import React from 'react'
+import { Card } from 'antd'
 
 const Account = () => {
   return (
-    <div>This is account</div>
+    <Card>This is account</Card>
   )
 }
 

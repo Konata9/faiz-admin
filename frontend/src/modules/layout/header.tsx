@@ -19,7 +19,7 @@ const iconStyle = {
 const dropdownMenu = (
   <Menu>
     <Menu.Item>
-      <RouterLink to="/">
+      <RouterLink to="/account">
         <Icon type="user" style={iconStyle} />
         {formatMessage('account_center')}
       </RouterLink>

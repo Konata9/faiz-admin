@@ -40,17 +40,17 @@ const MenuList = inject((stores: IStore) => {
   observer(
     (props: IProps) => {
       const createMenuList = (menuList: Array<any>): any => {
-        return menuList.map((menu, index) => {
+        return menuList.map((menu) => {
           const { submenu, name, link = '' } = menu
           if (submenu) {
             return (
-              <Menu.SubMenu title={formatMessage(`menu.${name}`)} key={`${name}_${index}`} >
+              <Menu.SubMenu title={formatMessage(`menu.${name}`)} key={name} >
                 {...createMenuList(submenu)}
               </Menu.SubMenu>
             )
           } else {
             return (
-              <Menu.Item key={`${name}_${index}`}>
+              <Menu.Item key={name}>
                 <RouterLink to={link}>{formatMessage(`menu.${name}`)}</RouterLink>
               </Menu.Item>
             )

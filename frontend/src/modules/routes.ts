@@ -3,6 +3,7 @@ import Layout from '@modules/layout'
 import Dashboard from '@modules/dashboard'
 import User from '@modules/system/user'
 import Role from '@modules/system/role'
+import Account from '@modules/account'
 
 export interface IRouter {
   path: string
@@ -27,6 +28,7 @@ const routes: Array<IRouter> = [
       { path: '/system', redirect: '/system/user', exact: true },
       { path: '/system/user', component: User },
       { path: '/system/role', component: Role },
+      { path: '/account', component: Account },
     ]
   },
 ]

@@ -14,6 +14,10 @@ export default {
     save: '保存',
     update: '更新',
     delete: '删除',
-    edit: '编辑'
-  }
+    edit: '编辑',
+    search: '搜索'
+  },
+  table: {
+    action: '操作'
+  },
 }
