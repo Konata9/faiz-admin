@@ -1,5 +1,10 @@
 import styled from 'styled-components'
-import { bgDark, bgWhite, fontDark } from '@modules/style/color'
+import { Link, LinkProps } from 'react-router-dom'
+import { bgDark, bgWhite, fontDark, fontBlue, fontGray, borderLight } from '@modules/style/color'
+
+interface IBreadLink extends LinkProps {
+  current: boolean
+}
 
 const headerHeight = '64px'
 
@@ -32,12 +37,29 @@ export const HeaderWrapper = styled.div`
   padding: 0 20px;
   color: ${fontDark};
   background: ${bgWhite};
+  border-bottom: 1px solid ${borderLight};
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+`
+
+export const BreadcrumbWrapper = styled.div`
+  padding: 10px 20px;
+  color: ${fontDark};
+  background: ${bgWhite};
+`
+
+export const BreadLink = styled(Link)`
+  color: ${
+  ({ current = false }: IBreadLink) => current ? fontBlue : fontGray
+  }
+`
+
+export const BreadSpliter = styled.span`
+  padding: 0 10px;
 `
 
 export const ContentWrapper = styled.div`
-  width: 100%;
-  padding: 20px;
-  color: ${fontDark};
+width: 100 %;
+padding: 20px;
+color: ${ fontDark};
 `

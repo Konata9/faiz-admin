@@ -1,7 +1,8 @@
 import React from 'react'
-import { Dropdown, Menu, Avatar } from 'antd'
+import { Dropdown, Menu, Avatar, Icon } from 'antd'
 import { HeaderWrapper } from './style'
-import Breadcrumbs from './breadcrumbs'
+import { RouterLink } from '@modules/style/layout'
+import Breadcrumb from './breadcrumb'
 
 const dropdownMenu = (
   <Menu>
@@ -25,16 +26,16 @@ const dropdownMenu = (
 
 const Header = () => {
   return (
-    <HeaderWrapper>
-      <Breadcrumbs />
-      <div>
-        <Dropdown overlay={dropdownMenu} placement="bottomLeft">
+    <>
+      <HeaderWrapper>
+        <Dropdown overlay={dropdownMenu} placement="bottomRight">
           <div>
             <Avatar icon="user" />233
           </div>
         </Dropdown>
-      </div>
-    </HeaderWrapper>
+      </HeaderWrapper>
+      <Breadcrumb />
+    </>
   )
 }
 
