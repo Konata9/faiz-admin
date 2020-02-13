@@ -6,7 +6,7 @@ import Menu from './menu'
 import Header from './header'
 import Content from './content'
 
-const Layout = () => {
+const Layout = ({ routes }: any) => {
   return (
     <StyledLayout>
       <SideBar>
@@ -15,7 +15,7 @@ const Layout = () => {
 
       <Container>
         <Header />
-        <Content />
+        <Content routes={routes} />
       </Container>
     </StyledLayout>
   )
