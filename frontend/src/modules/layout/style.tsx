@@ -3,7 +3,7 @@ import { Link, LinkProps } from 'react-router-dom'
 import { bgDark, bgWhite, fontDark, fontBlue, fontGray, borderLight } from '@modules/style/color'
 
 interface IBreadLink extends LinkProps {
-  current: boolean
+  current: any
 }
 
 const headerHeight = '64px'
@@ -42,6 +42,15 @@ export const HeaderWrapper = styled.div`
   justify-content: flex-end;
 `
 
+export const UserInfoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+export const UserNameWrapper = styled.div`
+  margin-left: 10px;
+`
+
 export const BreadcrumbWrapper = styled.div`
   padding: 10px 20px;
   color: ${fontDark};
@@ -50,7 +59,7 @@ export const BreadcrumbWrapper = styled.div`
 
 export const BreadLink = styled(Link)`
   color: ${
-  ({ current = false }: IBreadLink) => current ? fontBlue : fontGray
+  ({ current = 0 }: IBreadLink) => current ? fontBlue : fontGray
   }
 `
 

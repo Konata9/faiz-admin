@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { BreadcrumbWrapper, BreadLink, BreadSpliter } from './style'
 import { formatMessage } from '@utils'
 
@@ -37,7 +37,6 @@ const renderBreadcrumb = (pathname: string) => {
 }
 
 const Breadcrumb = ({ spilter = '/' }: IProps) => {
-
   const { pathname } = useLocation()
   const [crumbs, setCrumbs] = useState<ICrumb[]>([])
 
@@ -47,33 +46,31 @@ const Breadcrumb = ({ spilter = '/' }: IProps) => {
   }, [pathname])
 
   return (
-    <BreadcrumbWrapper>
-      {
-        crumbs.map((crumb, index) => {
-          const { link, name } = crumb
-          return (
-            index === 0 ?
-              <BreadLink
-                current={index === crumbs.length - 1}
-                to={link}
-                key={index}>
-                {formatMessage(name)}
-              </BreadLink> :
-              <>
-                <BreadSpliter>
-                  {spilter}
-                </BreadSpliter>
+    <>
+      {crumbs.length > 0 && (
+        <BreadcrumbWrapper>
+          {crumbs.map((crumb, index) => {
+            const { link, name } = crumb
+            const isCurrent = (index === crumbs.length - 1)
+
+            return (
+              <span key={index}>
+                {index > 0 && (
+                  <BreadSpliter>
+                    {spilter}
+                  </BreadSpliter>
+                )}
                 <BreadLink
-                  current={index === crumbs.length - 1}
-                  to={link}
-                  key={index}>
+                  current={isCurrent ? 1 : 0}
+                  to={link}>
                   {formatMessage(name)}
                 </BreadLink>
-              </>
-          )
-        })
-      }
-    </BreadcrumbWrapper>
+              </span>
+            )
+          })}
+        </BreadcrumbWrapper>
+      )}
+    </>
   )
 }
 

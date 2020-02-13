@@ -5,7 +5,7 @@ import Breadcrumb from './breadcrumb'
 
 import { formatMessage } from '@utils'
 import { IStore, IUserStore } from '@store'
-import { HeaderWrapper } from './style'
+import { HeaderWrapper, UserInfoWrapper, UserNameWrapper } from './style'
 import { RouterLink } from '@modules/style/layout'
 
 interface IProps {
@@ -46,9 +46,10 @@ const Header = inject((stores: IStore) => {
         <>
           <HeaderWrapper>
             <Dropdown overlay={dropdownMenu} placement="bottomRight">
-              <div>
-                <Avatar icon="user" />233
-              </div>
+              <UserInfoWrapper>
+                <Avatar icon="user" />
+                <UserNameWrapper>233</UserNameWrapper>
+              </UserInfoWrapper>
             </Dropdown>
           </HeaderWrapper>
           <Breadcrumb />

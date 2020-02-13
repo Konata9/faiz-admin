@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import { IRouter } from '@modules/routes'
 
 const RenderRoutes = ({ routes }: { routes: Array<IRouter> }) => {
@@ -7,9 +7,24 @@ const RenderRoutes = ({ routes }: { routes: Array<IRouter> }) => {
     <Switch>
       {
         routes.map((router: any, index) => {
-          const { path, component: RouterComponent, routes } = router
+          const { path, component: RouterComponent, redirect, routes, exact = false } = router
+
+          if (redirect) {
+            return <Redirect
+              key={index}
+              from={path}
+              to={redirect}
+              exact={exact}
+            />
+          }
+
           return (
-            <Route key={index} path={path} render={(props) => <RouterComponent {...props} routes={routes} />} />
+            <Route
+              key={index}
+              path={path}
+              exact={exact}
+              render={(props) => <RouterComponent {...props} routes={routes} />}
+            />
           )
         })
       }
