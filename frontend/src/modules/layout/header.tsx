@@ -16,31 +16,29 @@ const iconStyle = {
   marginRight: '15px'
 }
 
-const dropdownMenu = (
-  <Menu>
-    <Menu.Item>
-      <RouterLink to="/account">
-        <Icon type="user" style={iconStyle} />
-        {formatMessage('account_center')}
-      </RouterLink>
-    </Menu.Item>
-    <Menu.Item>
-      <RouterLink to="/">
-        <Icon type="logout" style={iconStyle} />
-        {formatMessage('system.logout')}
-      </RouterLink>
-    </Menu.Item>
-  </Menu>
-)
-
-const Header = inject((stores: IStore) => {
+const Header = inject((stores: IStore): IProps => {
   return {
     userStore: stores.userStore
   }
 })(
   observer(
     ({ userStore }: IProps) => {
-      const { userInfo } = userStore || { userInfo: {} }
+      const { userInfo, logout } = userStore as IUserStore
+
+      const dropdownMenu = (
+        <Menu>
+          <Menu.Item>
+            <RouterLink to="/account">
+              <Icon type="user" style={iconStyle} />
+              {formatMessage('account_center')}
+            </RouterLink>
+          </Menu.Item>
+          <Menu.Item onClick={logout}>
+            <Icon type="logout" style={iconStyle} />
+            {formatMessage('system.logout')}
+          </Menu.Item>
+        </Menu>
+      )
 
       return (
         <>

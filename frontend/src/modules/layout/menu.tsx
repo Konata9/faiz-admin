@@ -32,13 +32,21 @@ interface IProps {
   rootStore?: IRootStore
 }
 
-const MenuList = inject((stores: IStore) => {
+const MenuList = inject((stores: IStore): IProps => {
   return {
     rootStore: stores.rootStore
   }
 })(
   observer(
-    (props: IProps) => {
+    ({ rootStore }: IProps) => {
+
+      const { activeMenu, setActiveMenu } = rootStore as IRootStore
+
+      const selectMenu = ({ key: menuKey, keyPath, selectedKeys }: any) => {
+        console.log(keyPath, selectedKeys)
+        setActiveMenu(menuKey)
+      }
+
       const createMenuList = (menuList: Array<any>): any => {
         return menuList.map((menu) => {
           const { submenu, name, link = '' } = menu
@@ -61,7 +69,11 @@ const MenuList = inject((stores: IStore) => {
       return (
         <MenuWrapper>
           <Logo />
-          <Menu theme="dark" mode="inline">
+          <Menu
+            theme="dark"
+            mode="inline"
+            selectedKeys={[activeMenu]}
+            onSelect={selectMenu}>
             {...createMenuList(menuList)}
           </Menu>
         </MenuWrapper>

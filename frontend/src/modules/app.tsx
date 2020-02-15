@@ -1,5 +1,6 @@
 import { hot } from 'react-hot-loader/root'
 import React from 'react'
+import { Spin } from 'antd'
 import { inject, observer } from 'mobx-react'
 import { IStore, IRootStore } from '@store'
 import { StyledLayout } from './style/layout'
@@ -22,7 +23,9 @@ const App = inject((stores: IStore) => {
 
       if (!languageInited) {
         return (
-          <StyledLayout>Loading...</StyledLayout>
+          <StyledLayout>
+            <Spin spinning />
+          </StyledLayout>
         )
       }
 

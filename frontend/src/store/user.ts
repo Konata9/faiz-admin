@@ -6,6 +6,7 @@ export interface IUserStore {
   token: string
   isLogin: boolean
   login: (account: IAccount) => {}
+  logout: () => void
 }
 
 class UserStore {
@@ -22,13 +23,13 @@ class UserStore {
   @action
   async login(account: IAccount) {
     const { username, password } = account
-
     console.log('account', account)
   }
 
   @action
   async logout() {
-
+    localStorage.clear()
+    window.location.href = '/login'
   }
 }
 

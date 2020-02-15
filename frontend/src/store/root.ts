@@ -1,7 +1,7 @@
 import intl from 'react-intl-universal'
 import { observable, action } from 'mobx'
 
-import { LANGUAGE, LANGUAGE_STORE_KEY } from '../constants'
+import { LANGUAGE, LANGUAGE_STORE_KEY, STORAGE_KEYS } from '../constants'
 import zh_CN from '../../locale/zh_CN'
 
 const DEFAULT_LANGUAGE = LANGUAGE.ZH_CN
@@ -14,7 +14,10 @@ export interface IRootStore {
   languageInited: boolean
   currentLanguage: string
   menuList: Array<any>
-  currentMenu: string
+  activeMenu: string
+  switchLanguage: (language: string) => void
+  getMenuList: () => void
+  setActiveMenu: (menuKey: string) => void
 }
 
 class RootStore {
@@ -29,7 +32,7 @@ class RootStore {
   menuList = []
 
   @observable
-  currentMenu = ''
+  activeMenu = localStorage.getItem(STORAGE_KEYS.ACTIVE_MENU) || 'dashboard'
 
   constructor() {
     this.loadLocales()
@@ -45,15 +48,21 @@ class RootStore {
     this.languageInited = true
   }
 
-  @action
+  @action.bound
   switchLanguage(language: string) {
     this.currentLanguage = Object.values(LANGUAGE).includes(language) ? language : DEFAULT_LANGUAGE
     this.loadLocales()
   }
 
-  @action
+  @action.bound
   getMenuList() {
     this.menuList = []
+  }
+
+  @action.bound
+  setActiveMenu(menuKey: string) {
+    localStorage.setItem(STORAGE_KEYS.ACTIVE_MENU, menuKey)
+    this.activeMenu = menuKey
   }
 }
 

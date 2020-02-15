@@ -3,3 +3,7 @@ export const LANGUAGE = {
   ZH_CN: 'zh_CN',
 }
 export const AUTH_TOKEN = 'token'
+export const STORAGE_KEYS = {
+  TOKEN: 'token',
+  ACTIVE_MENU: 'activeMenu'
+}
