@@ -23,6 +23,7 @@ class UserStore {
   @action
   async login(account: IAccount) {
     const { username, password } = account
+    // TODO 使用 Graphql 向后端请求
     console.log('account', account)
   }
 

@@ -15,6 +15,7 @@ const menuList = [
   },
   {
     name: 'system',
+    link: '/system',
     submenu: [
       {
         name: 'system_user',
@@ -40,10 +41,14 @@ const MenuList = inject((stores: IStore): IProps => {
   observer(
     ({ rootStore }: IProps) => {
 
-      const { activeMenu, setActiveMenu } = rootStore as IRootStore
+      const { openKeys, activeMenu, setOpenMenus, setActiveMenu } = rootStore as IRootStore
+
+      const changeOpenMenu = (openKeys: string[]) => {
+        console.log(openKeys)
+        setOpenMenus(openKeys)
+      }
 
       const selectMenu = ({ key: menuKey, keyPath, selectedKeys }: any) => {
-        console.log(keyPath, selectedKeys)
         setActiveMenu(menuKey)
       }
 
@@ -52,13 +57,13 @@ const MenuList = inject((stores: IStore): IProps => {
           const { submenu, name, link = '' } = menu
           if (submenu) {
             return (
-              <Menu.SubMenu title={formatMessage(`menu.${name}`)} key={name} >
+              <Menu.SubMenu title={formatMessage(`menu.${name}`)} key={link} >
                 {...createMenuList(submenu)}
               </Menu.SubMenu>
             )
           } else {
             return (
-              <Menu.Item key={name}>
+              <Menu.Item key={link}>
                 <RouterLink to={link}>{formatMessage(`menu.${name}`)}</RouterLink>
               </Menu.Item>
             )
@@ -72,7 +77,9 @@ const MenuList = inject((stores: IStore): IProps => {
           <Menu
             theme="dark"
             mode="inline"
+            openKeys={openKeys}
             selectedKeys={[activeMenu]}
+            onOpenChange={changeOpenMenu}
             onSelect={selectMenu}>
             {...createMenuList(menuList)}
           </Menu>

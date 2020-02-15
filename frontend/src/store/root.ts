@@ -14,25 +14,30 @@ export interface IRootStore {
   languageInited: boolean
   currentLanguage: string
   menuList: Array<any>
+  openKeys: string[]
   activeMenu: string
   switchLanguage: (language: string) => void
   getMenuList: () => void
+  setOpenMenus: (openKeys: string[]) => void
   setActiveMenu: (menuKey: string) => void
 }
 
 class RootStore {
 
   @observable
-  languageInited = false
+  languageInited: boolean = false
 
   @observable
-  currentLanguage = DEFAULT_LANGUAGE
+  currentLanguage: string = DEFAULT_LANGUAGE
 
   @observable
-  menuList = []
+  menuList: string[] = []
 
   @observable
-  activeMenu = localStorage.getItem(STORAGE_KEYS.ACTIVE_MENU) || 'dashboard'
+  openKeys: string[] = localStorage.getItem(STORAGE_KEYS.OPEN_MENUS) ? <string[]>JSON.parse(<string>localStorage.getItem(STORAGE_KEYS.OPEN_MENUS)) : []
+
+  @observable
+  activeMenu: string = localStorage.getItem(STORAGE_KEYS.ACTIVE_MENU) || '/dashboard'
 
   constructor() {
     this.loadLocales()
@@ -57,6 +62,12 @@ class RootStore {
   @action.bound
   getMenuList() {
     this.menuList = []
+  }
+
+  @action.bound
+  setOpenMenus(openKeys: string[]) {
+    localStorage.setItem(STORAGE_KEYS.OPEN_MENUS, JSON.stringify(openKeys))
+    this.openKeys = openKeys
   }
 
   @action.bound

@@ -5,5 +5,6 @@ export const LANGUAGE = {
 export const AUTH_TOKEN = 'token'
 export const STORAGE_KEYS = {
   TOKEN: 'token',
+  OPEN_MENUS: 'openMenus',
   ACTIVE_MENU: 'activeMenu'
 }
