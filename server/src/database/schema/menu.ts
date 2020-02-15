@@ -1,14 +1,14 @@
 import { prop, arrayProp, getModelForClass } from '@typegoose/typegoose'
 
-class User {
+export class Menu {
   @prop()
-  username: string
+  name: string
 
   @prop()
-  password: string
+  link: string
 
-  @arrayProp({ items: String })
-  role: string[]
+  @arrayProp({ items: Object })
+  submenu: Object[]
 
   @prop({ default: Date.now })
   createTime: Date
@@ -17,4 +17,4 @@ class User {
   updateTime: Date
 }
 
-export const UserModel = getModelForClass(User)
+export const MenuModel = getModelForClass(Menu)

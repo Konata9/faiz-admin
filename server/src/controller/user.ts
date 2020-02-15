@@ -1,4 +1,4 @@
-import { UserModel } from '../database/schema/user'
+import { UsersModel } from '../database/schema/users'
 
 export interface IAccount {
   id?: string
@@ -8,7 +8,7 @@ export interface IAccount {
 
 export async function checkUserExist(condition: IAccount) {
   try {
-    return await UserModel.exists({ ...condition })
+    return await UsersModel.exists({ ...condition })
   } catch (error) {
     console.error(error)
   }
@@ -16,7 +16,7 @@ export async function checkUserExist(condition: IAccount) {
 
 export async function findUsers() {
   try {
-    return await UserModel.find()
+    return await UsersModel.find()
   } catch (error) {
     console.error(error)
   }
@@ -24,7 +24,7 @@ export async function findUsers() {
 
 export async function findUser(condition: IAccount) {
   try {
-    return await UserModel.findOne({ ...condition })
+    return await UsersModel.findOne({ ...condition })
   } catch (error) {
     console.error(error)
   }
@@ -32,7 +32,7 @@ export async function findUser(condition: IAccount) {
 
 export async function createUser(userInfo: IAccount) {
   try {
-    return await UserModel.create(userInfo)
+    return await UsersModel.create(userInfo)
   } catch (error) {
     console.error(error)
   }

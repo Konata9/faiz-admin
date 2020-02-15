@@ -35,6 +35,10 @@ class Database {
       console.error(error)
     }
   }
+
+  close() {
+    mongoose.connection.close()
+  }
 }
 
 export default Database

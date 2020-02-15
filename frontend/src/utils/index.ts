@@ -20,6 +20,6 @@ export const encryptedValue = (rawValue: any) => {
   return CryptoJS.DES.encrypt(JSON.stringify(rawValue), secret)
 }
 
-export const decrypt = (encryptedValue: any) => {
+export const decryptValue = (encryptedValue: any) => {
   return CryptoJS.DES.decrypt(encryptedValue, secret)
 }

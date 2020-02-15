@@ -18,5 +18,11 @@ export default {
   auth: {
     secret: 'ARTAfgdoV2',
     experies: 60 * 60 * 24
+  },
+  cryptoFrontend: {
+    secret: 'y3ySJqXv'
+  },
+  cryptoBackend: {
+    secret: 'wN2tPAid',
   }
 }
