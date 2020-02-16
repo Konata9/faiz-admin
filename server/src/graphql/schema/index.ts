@@ -1,6 +1,6 @@
-import * as UserSchema from './users'
-import * as UserInfoSchema from './userInfos'
-import * as RoleSchema from './roles'
+import * as UserSchema from './user'
+import * as UserInfoSchema from './userInfo'
+import * as RoleSchema from './role'
 import * as MenuSchema from './menu'
 
 export default {

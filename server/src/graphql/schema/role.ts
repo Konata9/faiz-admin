@@ -3,8 +3,8 @@ import { prop as mongooseProps, getModelForClass, arrayProp, modelOptions } from
 import { Types } from 'mongoose'
 
 @ObjectType()
-@modelOptions({ schemaOptions: { collection: 'roles' } })
-export class Roles {
+@modelOptions({ schemaOptions: { collection: 'role' } })
+export class Role {
   @Field(() => ID)
   id: string
 
@@ -12,7 +12,7 @@ export class Roles {
   @mongooseProps()
   name: string
 
-  @Field(() => [String])
+  @Field(types => [String])
   @arrayProp({ items: String })
   auths: string[]
 
@@ -25,4 +25,4 @@ export class Roles {
   updateTime: Date
 }
 
-export const RolesModel = getModelForClass(Roles)
+export const RoleModel = getModelForClass(Role)

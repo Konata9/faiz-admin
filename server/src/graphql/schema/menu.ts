@@ -1,5 +1,15 @@
 import { ObjectType, Field, ID } from 'type-graphql'
 import { prop as mongooseProps, arrayProp, getModelForClass, modelOptions } from '@typegoose/typegoose'
+import { Schema } from 'mongoose'
+
+@ObjectType()
+class Submenu {
+  @Field()
+  name?: string
+
+  @Field()
+  link?: string
+}
 
 @ObjectType()
 @modelOptions({ schemaOptions: { collection: 'menu' } })
@@ -15,9 +25,13 @@ export class Menu {
   @mongooseProps()
   link: string
 
-  @Field(() => [Object])
-  @arrayProp({ items: Object })
-  submenu: Object[]
+  @Field(types => [Submenu])
+  @arrayProp({
+    items:
+      Schema.Types.Mixed,
+    default: [{ name: '', link: '' }]
+  })
+  submenu: Schema.Types.Mixed[]
 
   @Field()
   @mongooseProps({ default: Date.now })

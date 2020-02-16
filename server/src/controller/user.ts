@@ -1,5 +1,4 @@
-import { UsersModel } from '../graphql/schema/users'
-
+import { UserModel } from '@src/graphql/schema/user'
 export interface IAccount {
   id?: string
   username?: string
@@ -8,7 +7,7 @@ export interface IAccount {
 
 export async function checkUserExist(condition: IAccount) {
   try {
-    return await UsersModel.exists({ ...condition })
+    return await UserModel.exists({ ...condition })
   } catch (error) {
     console.error(error)
   }
@@ -16,7 +15,7 @@ export async function checkUserExist(condition: IAccount) {
 
 export async function findUsers() {
   try {
-    return await UsersModel.find()
+    return await UserModel.find({}, { password: false })
   } catch (error) {
     console.error(error)
   }
@@ -25,7 +24,7 @@ export async function findUsers() {
 export async function findUser(condition: any = {}) {
   try {
     const { id: _id, ...rest } = condition
-    return await UsersModel.findOne({ _id, ...rest }, { password: false })
+    return await UserModel.findOne({ _id, ...rest }, { password: false })
   } catch (error) {
     console.error(error)
   }
@@ -33,7 +32,7 @@ export async function findUser(condition: any = {}) {
 
 export async function createUser(userInfo: IAccount) {
   try {
-    return await UsersModel.create(userInfo)
+    return await UserModel.create(userInfo)
   } catch (error) {
     console.error(error)
   }

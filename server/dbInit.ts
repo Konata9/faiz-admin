@@ -5,7 +5,7 @@ import { encryptValue, encryptValeUseSHA } from '@utils'
 
 (async function () {
   const db = new Database()
-  const { UsersModel, UserInfosModel, RolesModel, MenuModel } = schemas
+  const { UserModel, UserInfoModel, RoleModel, MenuModel } = schemas
 
   await db.init()
 
@@ -13,7 +13,6 @@ import { encryptValue, encryptValeUseSHA } from '@utils'
     {
       name: 'dashboard',
       link: '/',
-      submenu: []
     },
     {
       name: 'system',
@@ -38,7 +37,7 @@ import { encryptValue, encryptValeUseSHA } from '@utils'
     auths: ['all'],
   }
 
-  const { _id: roleId } = await RolesModel.create(initRole)
+  const { _id: roleId } = await RoleModel.create(initRole)
 
   const initUser = {
     username: 'admin',
@@ -48,7 +47,7 @@ import { encryptValue, encryptValeUseSHA } from '@utils'
     ]
   }
 
-  const { _id: userId } = await UsersModel.create(initUser)
+  const { _id: userId } = await UserModel.create(initUser)
 
   const initUserInfo = {
     userId,
@@ -56,12 +55,9 @@ import { encryptValue, encryptValeUseSHA } from '@utils'
     avatar: '',
     phone: '555',
     email: 'faiz@faizadmin.com',
-    extra: {
-      rider: true
-    }
   }
 
-  await UserInfosModel.create(initUserInfo)
+  await UserInfoModel.create(initUserInfo)
 
   db.close()
 })()

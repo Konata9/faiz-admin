@@ -1,17 +1,16 @@
 import { ObjectType, Field, ID } from 'type-graphql'
 import { prop as mongooseProps, getModelForClass, Ref, modelOptions } from '@typegoose/typegoose'
-import { Users } from './users'
-
+import { User } from './user'
 
 @ObjectType()
-@modelOptions({ schemaOptions: { collection: 'userInfos' } })
-export class UserInfos {
+@modelOptions({ schemaOptions: { collection: 'userInfo' } })
+export class UserInfo {
   @Field(() => ID)
   id: string
 
-  @Field(() => Users)
-  @mongooseProps({ ref: 'users', foreignField: 'users', localField: '_id' })
-  userId: Ref<Users>
+  @Field(types => User)
+  @mongooseProps({ ref: 'user' })
+  userId: Ref<User>
 
   @Field()
   @mongooseProps()
@@ -28,10 +27,6 @@ export class UserInfos {
   @Field()
   @mongooseProps()
   email: string
-
-  @Field(() => Object)
-  @mongooseProps()
-  extra: Object
 }
 
-export const UserInfosModel = getModelForClass(UserInfos)
+export const UserInfoModel = getModelForClass(UserInfo)
