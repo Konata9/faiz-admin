@@ -1,9 +1,9 @@
 import mongoose from 'mongoose'
 
-import CONSTANTS from '../constants'
+import CONSTANTS from '@constants'
 const { DEV, DB_CONNECTION } = CONSTANTS
 
-import config from '../../config'
+import config from '@config'
 const { mode, database } = config
 const dbPath = `mongodb://${database.host}:${database.port}/${database.dbname}`
 

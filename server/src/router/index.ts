@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express'
 import ERROR_CODE from '@constants/errorcode'
 import { generateJWT } from '@utils'
 import { validateLogin, validateSignup } from '@router/validator'
-import { findUser, createUser } from '@controller/user'
+import { findUser, createUser } from '@src/controller/users'
 
 const router = express.Router()
 

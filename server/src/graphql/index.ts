@@ -1,8 +1,8 @@
 import { buildSchemaSync } from 'type-graphql'
-import UserResolver from './resolver/user'
+import UsersResolver from './resolver/users'
 
 const schema = buildSchemaSync({
-  resolvers: [UserResolver]
+  resolvers: [UsersResolver]
 })
 
 export default schema

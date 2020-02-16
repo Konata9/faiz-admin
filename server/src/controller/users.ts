@@ -1,4 +1,4 @@
-import { UsersModel } from '../database/schema/users'
+import { UsersModel } from '../graphql/schema/users'
 
 export interface IAccount {
   id?: string
@@ -22,9 +22,10 @@ export async function findUsers() {
   }
 }
 
-export async function findUser(condition: IAccount) {
+export async function findUser(condition: any = {}) {
   try {
-    return await UsersModel.findOne({ ...condition })
+    const { id: _id, ...rest } = condition
+    return await UsersModel.findOne({ _id, ...rest }, { password: false })
   } catch (error) {
     console.error(error)
   }

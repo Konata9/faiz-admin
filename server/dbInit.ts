@@ -1,13 +1,13 @@
 import 'module-alias/register'
-import Database from '@database'
-import schemas from '@database/schema'
+import Database from './database'
+import schemas from '@src/graphql/schema'
 import { encryptValue, encryptValeUseSHA } from '@utils'
 
 (async function () {
   const db = new Database()
   const { UsersModel, UserInfosModel, RolesModel, MenuModel } = schemas
 
-  db.init()
+  await db.init()
 
   const initMenu = [
     {
