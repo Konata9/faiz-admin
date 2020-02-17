@@ -21,10 +21,17 @@ export async function findUsers() {
   }
 }
 
-export async function findUser(condition: any = {}) {
+export async function findUserByAccount({ username, password }: IAccount) {
   try {
-    const { id: _id, ...rest } = condition
-    return await UserModel.findOne({ _id, ...rest }, { password: false })
+    return await UserModel.findOne({ username, password }, { password: false })
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export async function findUserById(id: string) {
+  try {
+    return await UserModel.findById(id, { password: false })
   } catch (error) {
     console.error(error)
   }

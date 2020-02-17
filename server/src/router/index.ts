@@ -1,8 +1,8 @@
 import express, { Request, Response } from 'express'
 import ERROR_CODE from '@constants/errorcode'
-import { generateJWT } from '@utils'
+import { generateJWT, decryptFrontendValue, encryptValue, encryptValeUseSHA } from '@utils'
 import { validateLogin, validateSignup } from '@router/validator'
-import { findUser, createUser } from '@src/controller/user'
+import { findUserByAccount, createUser } from '@src/controller/user'
 
 const router = express.Router()
 
@@ -11,11 +11,15 @@ router.post('/login', [
   async (req: Request, res: Response) => {
     const { body: { username, password } } = req
     try {
-      const user = await findUser({ username, password })
+      const rawPassword = decryptFrontendValue(password)
+      console.log(rawPassword.toString())
+      const encryptedPassword = encryptValeUseSHA(encryptValue(rawPassword))
+      const user = await findUserByAccount({ username, password: encryptedPassword })
+      // console.log('user: ', user)
       if (user) {
-        const { _id: id } = user
-        const token = generateJWT({ id, username })
-        res.json({ token })
+        const { _id: id, updateTime } = user
+        const token = generateJWT({ id, username, updateTime })
+        res.json({ id, token })
       } else {
         res.send({ code: ERROR_CODE.USER_NOT_EXIST }).end()
       }
@@ -32,14 +36,14 @@ router.post('/signup', [
     const { body: { username, password } } = req
     try {
       // TODO with the password
-      const user = await findUser({ username })
+      const user = await findUserByAccount({ username })
       if (user) {
         res.send({ code: ERROR_CODE.USER_EXISTED }).end()
       } else {
         const newUser = await createUser({ username, password })
         const { _id: id } = newUser
         const token = generateJWT({ id, username })
-        res.json({ token }).end()
+        res.json({ userId: id, token }).end()
       }
     } catch (error) {
       // TODO with error

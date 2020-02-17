@@ -1,5 +1,7 @@
 import { observable, action } from 'mobx'
 import { IAccount } from '../interface/user'
+import { login } from '@service/user'
+import { encryptedValue } from '@utils'
 
 export interface IUserStore {
   userInfo: {}
@@ -20,11 +22,12 @@ class UserStore {
   @observable
   isLogin = false
 
-  @action
+  @action.bound
   async login(account: IAccount) {
     const { username, password } = account
-    // TODO 使用 Graphql 向后端请求
-    console.log('account', account)
+    console.log(password)
+    const { data } = await login({ username, password: encryptedValue(password) })
+    console.log('data', data)
   }
 
   @action

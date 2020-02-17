@@ -9,9 +9,5 @@ module.exports = {
     port: 2222,
     hot: true,
     historyApiFallback: true,
-    proxy: {
-      '/graphql': 'http://127.0.0.1:3333/graphql',
-      '/api': 'http://127.0.0.1:3333/api'
-    }
   }
 }

@@ -1,6 +1,7 @@
 import 'module-alias/register'
 import 'reflect-metadata'
 import express from 'express'
+import cors from 'cors'
 import bodyParser from 'body-parser'
 import jwt from 'express-jwt'
 import { ApolloServer } from 'apollo-server-express'
@@ -15,27 +16,30 @@ import schema from '@graphql'
   const { server: { port, host }, gqlPath, auth: { secret } } = CONFIG
 
   const app = express()
+  const database = new Database()
+  database.init()
+
+  app.use(cors())
+  app.use(bodyParser.json())
+  app.use('/api', router)
+  app.use(jwt({ secret }).unless({
+    path: [
+      '/api/login',
+      '/api/signup'
+    ]
+  }))
+
   const apolloServer = new ApolloServer({
     schema,
     context: ({ req }: { req: express.Request }) => {
       const { headers } = req
       const token = headers.authorization || ''
-      const user = verifyUser(token)
-      return { user }
+      if (token) {
+        const user = verifyUser(token)
+        return { user }
+      }
     }
   })
-
-  const database = new Database()
-  database.init()
-
-  app.use(bodyParser.json())
-  // app.use(jwt({ secret }).unless({
-  //   path: [
-  //     '/api/login',
-  //     '/api/signup'
-  //   ]
-  // }))
-  app.use('/api', router)
   apolloServer.applyMiddleware({ app, path: gqlPath })
 
   app.listen(port, host, null, () => {

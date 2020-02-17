@@ -3,8 +3,9 @@ import { IAccount } from '@interface/user'
 
 export const login = async (data: IAccount) => {
   const response = await request.post('/login', {
-    data
+    ...data
   })
 
   return response
 }
+
