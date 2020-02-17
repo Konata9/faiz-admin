@@ -12,10 +12,9 @@ router.post('/login', [
     const { body: { username, password } } = req
     try {
       const rawPassword = decryptFrontendValue(password)
-      console.log(rawPassword.toString())
       const encryptedPassword = encryptValeUseSHA(encryptValue(rawPassword))
       const user = await findUserByAccount({ username, password: encryptedPassword })
-      // console.log('user: ', user)
+      console.log('user: ', user)
       if (user) {
         const { _id: id, updateTime } = user
         const token = generateJWT({ id, username, updateTime })

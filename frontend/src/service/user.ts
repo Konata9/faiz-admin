@@ -1,3 +1,4 @@
+import gql from 'graphql-tag'
 import request from '@utils/request'
 import { IAccount } from '@interface/user'
 
@@ -9,3 +10,13 @@ export const login = async (data: IAccount) => {
   return response
 }
 
+export const GET_USERINFO = gql`
+  query UserInfo($userId: String!){
+    userInfo(userId: $userId){
+      nickname
+      avatar
+      phone
+      email
+    }
+  }
+`

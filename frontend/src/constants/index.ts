@@ -4,7 +4,12 @@ export const LANGUAGE = {
 }
 export const AUTH_TOKEN = 'token'
 export const STORAGE_KEYS = {
+  ID: 'id',
   TOKEN: 'token',
   OPEN_MENUS: 'openMenus',
   ACTIVE_MENU: 'activeMenu'
+}
+export const RESPONSE_STATUS = {
+  SUCCESS: 'success',
+  FAILED: 'failed'
 }

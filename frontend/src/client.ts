@@ -1,5 +1,6 @@
 import ApolloClient, { DocumentNode } from 'apollo-boost'
 
+import { STORAGE_KEYS } from '@constants'
 import CONFIG from '@config'
 
 const { apollo: { host, port } } = CONFIG
@@ -8,6 +9,14 @@ const client = new ApolloClient({
   fetchOptions: {
     credentials: 'include'
   },
+  request: (operation) => {
+    const token = localStorage.getItem(STORAGE_KEYS.TOKEN)
+    operation.setContext({
+      headers: {
+        authorization: token ? `Bearer ${token}` : ''
+      }
+    })
+  }
 })
 
 export const queryGQL = async (query: DocumentNode) => {

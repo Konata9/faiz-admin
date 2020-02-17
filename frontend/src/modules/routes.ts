@@ -17,7 +17,8 @@ export interface IRouter {
 const routes: Array<IRouter> = [
   {
     path: '/login',
-    component: Login
+    component: Login,
+    exact: true
   },
   {
     path: '/',
