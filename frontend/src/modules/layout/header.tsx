@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Dropdown, Menu, Avatar, Icon, Spin } from 'antd'
 import { inject, observer } from 'mobx-react'
 import Breadcrumb from './breadcrumb'
 
-import { GET_USERINFO } from '@service/user'
 import { formatMessage } from '@utils'
 import { IStore, UserStore, GlobalStore } from '@store'
 import { HeaderWrapper, UserInfoWrapper, UserNameWrapper } from './style'

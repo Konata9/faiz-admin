@@ -18,7 +18,6 @@ export class UserStore {
   async getUserInfo(userId: string) {
     const { name: caller } = this.getUserInfo
     const { userInfo } = await queryGQL(GET_USERINFO, { userId }, caller)
-    console.log(userInfo)
     this.userInfo = userInfo
   }
 
