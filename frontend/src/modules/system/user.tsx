@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Input, Select, Button, Card, Table, Modal } from 'antd'
 import { FormComponentProps } from 'antd/lib/form'
+import { inject, observer } from 'mobx-react'
+import { IStore, UserStore, GlobalStore } from '@store'
 import { formatMessage } from '@utils'
 import { SearchbarWrapper, TableHeaderWrapper } from './style'
 
@@ -110,11 +112,6 @@ const columns = [
     dataIndex: 'username',
     key: 'username'
   },
-  {
-    title: formatMessage('role'),
-    dataIndex: 'role',
-    key: 'role'
-  },
 ]
 
 const UserList = ({ data }: { data: Array<any> }) => {
@@ -130,6 +127,7 @@ const UserList = ({ data }: { data: Array<any> }) => {
   return (
     <Table
       title={() => <TableHeader />}
+      rowKey="id"
       columns={tableColumn}
       dataSource={data}
       pagination={{
@@ -140,15 +138,33 @@ const UserList = ({ data }: { data: Array<any> }) => {
   )
 }
 
-const User = () => {
-  const data: any[] = []
-
-  return (
-    <Card>
-      <Searchbar />
-      <UserList data={data} />
-    </Card>
-  )
+interface IProps {
+  global?: GlobalStore
+  userStore?: UserStore
 }
+
+const User = inject((stores: IStore) => {
+  return {
+    global: stores.global as GlobalStore,
+    userStore: stores.userStore as UserStore
+  }
+})(
+  observer(
+    ({ global, userStore }: IProps) => {
+      const { getUserList, userList } = userStore as UserStore
+
+      useEffect(() => {
+        getUserList()
+      }, [])
+
+      return (
+        <Card>
+          <Searchbar />
+          <UserList data={userList} />
+        </Card>
+      )
+    }
+  )
+)
 
 export default User

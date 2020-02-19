@@ -20,7 +20,7 @@ export class User {
   password: string
 
   @Field(types => [Role])
-  @arrayProp({ ref: 'role' })
+  @arrayProp({ itemsRef: Role })
   roles: Ref<Role>[]
 
   @Field()

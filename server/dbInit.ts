@@ -52,7 +52,7 @@ import { encryptValue, encryptValeUseSHA } from '@utils'
   const initUserInfo = {
     userId,
     nickname: '乾巧',
-    avatar: '',
+    avatar: 'https://vignette.wikia.nocookie.net/kamenrider/images/9/9e/KRD-Decade_Faiz.png/revision/latest/top-crop/width/300/height/300?cb=20190912132315',
     phone: '555',
     email: 'faiz@faizadmin.com',
   }

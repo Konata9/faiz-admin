@@ -9,7 +9,7 @@ export class UserInfo {
   id: string
 
   @Field(types => User)
-  @mongooseProps({ ref: 'user' })
+  @mongooseProps({ ref: User })
   userId: Ref<User>
 
   @Field()

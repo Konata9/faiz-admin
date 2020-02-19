@@ -1,24 +1,59 @@
 import { observable, action } from 'mobx'
 import { queryGQL } from '@src/client'
-import { login, GET_USERINFO, IUserInfo } from '@service/user'
+import { login, GET_USERINFO, GET_USERLIST } from '@service/user'
 import { STORAGE_KEYS, RESPONSE_STATUS } from '@constants'
 import { encryptedValue } from '@utils'
+
+interface IUserInfo {
+  nickname: string
+  avatar: string
+  phone: string
+  email: string
+}
+
+interface IRole {
+  name: string
+  auths: Array<String>
+  createTime: string
+  updateTime: string
+}
+
+interface IUser {
+  username: string
+  roles: Array<IRole>
+  createTime: string
+  updateTime: string
+}
 
 export class UserStore {
   @observable
   id: string = localStorage.getItem(STORAGE_KEYS.ID) || ''
 
   @observable
+  token: string | null = localStorage.getItem(STORAGE_KEYS.TOKEN) || null
+
+  @observable
   userInfo: IUserInfo = { nickname: '', avatar: '', phone: '', email: '' }
 
   @observable
-  token: string | null = localStorage.getItem(STORAGE_KEYS.TOKEN) || null
+  userList: Array<IUser> = []
 
   @action.bound
   async getUserInfo(userId: string) {
     const { name: caller } = this.getUserInfo
-    const { userInfo } = await queryGQL(GET_USERINFO, { userId }, caller)
+    const { userInfo } = await queryGQL({
+      query: GET_USERINFO,
+      variables: { userId },
+      caller
+    })
     this.userInfo = userInfo
+  }
+
+  @action.bound
+  async getUserList() {
+    const { name: caller } = this.getUserList
+    const { users } = await queryGQL({ query: GET_USERLIST, caller })
+    this.userList = users
   }
 
   @action.bound
