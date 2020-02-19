@@ -4,13 +4,11 @@ import { LANGUAGE, LANGUAGE_STORE_KEY, STORAGE_KEYS } from '@constants'
 import zh_CN from '@locale/zh_CN'
 
 const DEFAULT_LANGUAGE = LANGUAGE.ZH_CN
-
 const locales = {
   [LANGUAGE.ZH_CN]: zh_CN
 }
 
 export class RootStore {
-
   @observable
   languageInited: boolean = false
 

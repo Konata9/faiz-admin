@@ -1,21 +1,25 @@
 import { observable, action } from 'mobx'
-import { login } from '@service/user'
+import { queryGQL } from '@src/client'
+import { login, GET_USERINFO, IUserInfo } from '@service/user'
 import { STORAGE_KEYS, RESPONSE_STATUS } from '@constants'
 import { encryptedValue } from '@utils'
 
 export class UserStore {
   @observable
-  id: string | null = localStorage.getItem(STORAGE_KEYS.ID) || null
+  id: string = localStorage.getItem(STORAGE_KEYS.ID) || ''
 
   @observable
-  userInfo: Object = {}
+  userInfo: IUserInfo = { nickname: '', avatar: '', phone: '', email: '' }
 
   @observable
   token: string | null = localStorage.getItem(STORAGE_KEYS.TOKEN) || null
 
   @action.bound
-  checkTokenInStore() {
-    this.token = this.token || localStorage.getItem(STORAGE_KEYS.TOKEN)
+  async getUserInfo(userId: string) {
+    const { name: caller } = this.getUserInfo
+    const { userInfo } = await queryGQL(GET_USERINFO, { userId }, caller)
+    console.log(userInfo)
+    this.userInfo = userInfo
   }
 
   @action.bound
@@ -36,7 +40,7 @@ export class UserStore {
     return { status: RESPONSE_STATUS.FAILED }
   }
 
-  @action
+  @action.bound
   logout(): void {
     localStorage.clear()
     window.location.href = '/login'

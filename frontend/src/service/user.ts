@@ -2,6 +2,13 @@ import gql from 'graphql-tag'
 import request from '@utils/request'
 import { IAccount } from '@interface/user'
 
+export interface IUserInfo {
+  nickname: string
+  avatar: string
+  phone: string
+  email: string
+}
+
 export const login = async (data: IAccount) => {
   const response = await request.post('/login', {
     ...data

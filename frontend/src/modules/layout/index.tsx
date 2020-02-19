@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { useLazyQuery } from '@apollo/react-hooks'
 import { inject, observer } from 'mobx-react'
 import { StyledLayout } from '@modules/style/layout'
 import { SideBar, Container } from './style'
@@ -12,9 +11,6 @@ import { UserStore } from '@store/user'
 import Menu from './menu'
 import Header from './header'
 import Content from './content'
-
-import { GET_USERINFO } from '@service/user'
-import { STORAGE_KEYS } from '@src/constants'
 
 interface IProps {
   routes: IRouter[]
@@ -28,25 +24,18 @@ const Layout = inject((stores: IStore) => {
 })(
   observer(
     ({ routes, userStore }: IProps) => {
-      const { id, checkTokenInStore = () => { } } = userStore || {}
       const history = useHistory()
-      const [getUerInfo, { loading, data }] = useLazyQuery(GET_USERINFO)
-
-      if (data) {
-        console.log(data)
-      }
-
       const checkToken = () => {
-        const { token } = userStore || {}
+        const { token } = userStore as UserStore
         if (!token) {
           history.push('/login')
         }
       }
 
       useEffect(() => {
-        checkTokenInStore()
         checkToken()
-        getUerInfo({ variables: { userId: id } })
+        const { id: userId, getUserInfo } = userStore as UserStore
+        getUserInfo(userId)
       }, [])
 
       return (
@@ -59,7 +48,7 @@ const Layout = inject((stores: IStore) => {
             <Header />
             <Content routes={routes} />
           </Container>
-        </StyledLayout>
+        </StyledLayout >
       )
     }
   )

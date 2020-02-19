@@ -4,7 +4,6 @@ import store from '@store'
 import { generateSign } from '@utils'
 
 const { api: { host, port } } = CONFIG
-// const { userStore: { token } } = store
 
 const request = axios.create({
   baseURL: `//${host}:${port}/api`,
@@ -14,11 +13,12 @@ const request = axios.create({
 request.interceptors.request.use((requestConfig: AxiosRequestConfig) => {
   const { headers, data, params } = requestConfig
   const sign = generateSign(JSON.stringify(`${params}_${data}`))
+  const { userStore: { token } } = store
   return {
     ...requestConfig,
     headers: {
       ...headers,
-      authorization: `Bearer ` || '',
+      authorization: `Bearer ${token}` || '',
       sign
     }
   }

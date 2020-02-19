@@ -1,5 +1,5 @@
 import ApolloClient, { DocumentNode } from 'apollo-boost'
-
+import global from '@store/global'
 import { STORAGE_KEYS } from '@constants'
 import CONFIG from '@config'
 
@@ -19,9 +19,13 @@ const client = new ApolloClient({
   }
 })
 
-export const queryGQL = async (query: DocumentNode) => {
+export const queryGQL = async (query: DocumentNode, variables: any, caller: string) => {
   try {
-    return await client.query({ query })
+    caller && global.switchLoadingStatus(caller, true)
+    const { data } = await client.query({ query, variables })
+    caller && global.switchLoadingStatus(caller, false)
+
+    return data
   } catch (error) {
     console.error(error)
   }

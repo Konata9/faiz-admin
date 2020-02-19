@@ -43,7 +43,10 @@ export const HeaderWrapper = styled.div`
 `
 
 export const UserInfoWrapper = styled.div`
+  min-width: 100px;
+  height: ${headerHeight};
   display: flex;
+  justify-content: flex-start;
   align-items: center;
 `
 

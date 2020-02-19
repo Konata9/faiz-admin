@@ -1,14 +1,16 @@
-import React from 'react'
-import { Dropdown, Menu, Avatar, Icon } from 'antd'
+import React, { useEffect } from 'react'
+import { Dropdown, Menu, Avatar, Icon, Spin } from 'antd'
 import { inject, observer } from 'mobx-react'
 import Breadcrumb from './breadcrumb'
 
+import { GET_USERINFO } from '@service/user'
 import { formatMessage } from '@utils'
-import { IStore, UserStore } from '@store'
+import { IStore, UserStore, GlobalStore } from '@store'
 import { HeaderWrapper, UserInfoWrapper, UserNameWrapper } from './style'
 import { RouterLink } from '@modules/style/layout'
 
 interface IProps {
+  global?: GlobalStore
   userStore?: UserStore
 }
 
@@ -18,12 +20,15 @@ const iconStyle = {
 
 const Header = inject((stores: IStore): IProps => {
   return {
-    userStore: stores.userStore
+    global: stores.global as GlobalStore,
+    userStore: stores.userStore as UserStore
   }
 })(
   observer(
-    ({ userStore }: IProps) => {
-      const { userInfo, logout } = userStore as UserStore
+    ({ global, userStore }: IProps) => {
+      const { userInfo: { nickname, avatar }, logout } = userStore as UserStore
+      const { loadingStatus } = global as GlobalStore
+
       const dropdownMenu = (
         <Menu>
           <Menu.Item>
@@ -43,10 +48,12 @@ const Header = inject((stores: IStore): IProps => {
         <>
           <HeaderWrapper>
             <Dropdown overlay={dropdownMenu} placement="bottomRight">
-              <UserInfoWrapper>
-                <Avatar icon="user" />
-                <UserNameWrapper>233</UserNameWrapper>
-              </UserInfoWrapper>
+              <Spin spinning={loadingStatus['getUserInfo']}>
+                <UserInfoWrapper>
+                  <Avatar icon="user" src={avatar} />
+                  <UserNameWrapper>{nickname}</UserNameWrapper>
+                </UserInfoWrapper>
+              </Spin>
             </Dropdown>
           </HeaderWrapper>
           <Breadcrumb />

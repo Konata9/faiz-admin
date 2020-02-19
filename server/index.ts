@@ -22,12 +22,12 @@ import schema from '@graphql'
   app.use(cors())
   app.use(bodyParser.json())
   app.use('/api', router)
-  // app.use(jwt({ secret }).unless({
-  //   path: [
-  //     '/api/login',
-  //     '/api/signup'
-  //   ]
-  // }))
+  app.use(jwt({ secret }).unless({
+    path: [
+      '/api/login',
+      '/api/signup'
+    ]
+  }))
 
   const apolloServer = new ApolloServer({
     schema,
