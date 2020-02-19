@@ -1,31 +1,17 @@
 import { observable, action } from 'mobx'
-import { IAccount } from '../interface/user'
 import { login } from '@service/user'
 import { STORAGE_KEYS, RESPONSE_STATUS } from '@constants'
 import { encryptedValue } from '@utils'
 
-export interface IUserStore {
-  id: string | null,
-  userInfo: {}
-  token: string | null
-  isLogin: boolean
-  checkTokenInStore: () => void
-  login: (account: IAccount) => (Promise<{ status: string }>)
-  logout: () => void
-}
-
-class UserStore {
+export class UserStore {
   @observable
-  id = ''
+  id: string | null = localStorage.getItem(STORAGE_KEYS.ID) || null
 
   @observable
-  userInfo = {}
+  userInfo: Object = {}
 
   @observable
-  token: string | null = null
-
-  @observable
-  isLogin = false
+  token: string | null = localStorage.getItem(STORAGE_KEYS.TOKEN) || null
 
   @action.bound
   checkTokenInStore() {
@@ -33,7 +19,7 @@ class UserStore {
   }
 
   @action.bound
-  async login(account: IAccount) {
+  async login(account: ({ username: string, password: string })): Promise<{ status: string }> {
     const { username, password } = account
     const { data } = await login({ username, password: encryptedValue(password) })
     if (data) {
@@ -51,7 +37,7 @@ class UserStore {
   }
 
   @action
-  logout() {
+  logout(): void {
     localStorage.clear()
     window.location.href = '/login'
   }

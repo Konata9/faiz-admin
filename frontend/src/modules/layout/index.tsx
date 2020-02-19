@@ -7,7 +7,7 @@ import { SideBar, Container } from './style'
 
 import { IRouter } from '@modules/routes'
 import { IStore } from '@store'
-import { IUserStore } from '@store/user'
+import { UserStore } from '@store/user'
 
 import Menu from './menu'
 import Header from './header'
@@ -18,12 +18,12 @@ import { STORAGE_KEYS } from '@src/constants'
 
 interface IProps {
   routes: IRouter[]
-  userStore?: IUserStore
+  userStore?: UserStore
 }
 
 const Layout = inject((stores: IStore) => {
   return {
-    userStore: stores.userStore as IUserStore
+    userStore: stores.userStore as UserStore
   }
 })(
   observer(

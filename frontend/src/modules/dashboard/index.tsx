@@ -3,10 +3,10 @@ import { Card } from 'antd'
 import { inject, observer } from 'mobx-react'
 
 import { IStore } from '@store'
-import { IUserStore } from '@store/user'
+import { UserStore } from '@store/user'
 
 interface IProps {
-  userStore?: IUserStore
+  userStore?: UserStore
 }
 
 const Dashboard = inject((stores: IStore) => {
@@ -16,7 +16,7 @@ const Dashboard = inject((stores: IStore) => {
 })(
   observer(
     ({ userStore }: IProps) => {
-      const { userInfo } = userStore as IUserStore
+      const { userInfo } = userStore as UserStore
 
       return (
         <Card>

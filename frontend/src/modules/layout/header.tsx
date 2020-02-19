@@ -4,12 +4,12 @@ import { inject, observer } from 'mobx-react'
 import Breadcrumb from './breadcrumb'
 
 import { formatMessage } from '@utils'
-import { IStore, IUserStore } from '@store'
+import { IStore, UserStore } from '@store'
 import { HeaderWrapper, UserInfoWrapper, UserNameWrapper } from './style'
 import { RouterLink } from '@modules/style/layout'
 
 interface IProps {
-  userStore?: IUserStore
+  userStore?: UserStore
 }
 
 const iconStyle = {
@@ -23,8 +23,7 @@ const Header = inject((stores: IStore): IProps => {
 })(
   observer(
     ({ userStore }: IProps) => {
-      const { userInfo, logout } = userStore as IUserStore
-
+      const { userInfo, logout } = userStore as UserStore
       const dropdownMenu = (
         <Menu>
           <Menu.Item>

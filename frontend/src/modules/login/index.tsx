@@ -12,7 +12,7 @@ import { formatMessage } from '@utils'
 import { RESPONSE_STATUS } from '@constants'
 
 import { IStore } from '@store'
-import { IUserStore } from '@store/user'
+import { UserStore } from '@store/user'
 import { IAccount } from '@interface/user'
 
 const CardWrapper = styled.div`
@@ -30,7 +30,7 @@ const CardTitle = styled.div`
 type LoginForm = FormComponentProps
 
 interface IProps extends FormComponentProps {
-  userStore: IUserStore,
+  userStore: UserStore,
 }
 
 const LoginForm = Form.create<IProps>()(({ form, userStore }: IProps) => {

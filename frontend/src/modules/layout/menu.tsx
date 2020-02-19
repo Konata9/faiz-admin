@@ -5,7 +5,7 @@ import { RouterLink } from '@modules/style/layout'
 import { MenuWrapper } from './style'
 import Logo from './logo'
 
-import { IStore, IRootStore } from '@store'
+import { IStore, RootStore } from '@store'
 import { formatMessage } from '@utils'
 
 const menuList = [
@@ -30,7 +30,7 @@ const menuList = [
 ]
 
 interface IProps {
-  rootStore?: IRootStore
+  rootStore?: RootStore
 }
 
 const MenuList = inject((stores: IStore): IProps => {
@@ -41,7 +41,7 @@ const MenuList = inject((stores: IStore): IProps => {
   observer(
     ({ rootStore }: IProps) => {
 
-      const { openKeys, activeMenu, setOpenMenus, setActiveMenu } = rootStore as IRootStore
+      const { openKeys, activeMenu, setOpenMenus, setActiveMenu } = rootStore as RootStore
 
       const changeOpenMenu = (openKeys: string[]) => {
         console.log(openKeys)
