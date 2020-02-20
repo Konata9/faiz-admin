@@ -25,7 +25,7 @@ const Header = inject((stores: IStore): IProps => {
 })(
   observer(
     ({ global, userStore }: IProps) => {
-      const { userInfo: { nickname, avatar }, logout } = userStore as UserStore
+      const { userInfo, logout } = userStore as UserStore
       const { loadingStatus } = global as GlobalStore
 
       const dropdownMenu = (
@@ -49,8 +49,12 @@ const Header = inject((stores: IStore): IProps => {
             <Dropdown overlay={dropdownMenu} placement="bottomRight">
               <Spin spinning={loadingStatus['getUserInfo']}>
                 <UserInfoWrapper>
-                  <Avatar icon="user" src={avatar} />
-                  <UserNameWrapper>{nickname}</UserNameWrapper>
+                  {userInfo && (
+                    <>
+                      <Avatar icon="user" src={userInfo.avatar} />
+                      <UserNameWrapper>{userInfo.nickname}</UserNameWrapper>
+                    </>
+                  )}
                 </UserInfoWrapper>
               </Spin>
             </Dropdown>

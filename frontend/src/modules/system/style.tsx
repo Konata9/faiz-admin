@@ -12,3 +12,7 @@ export const TableHeaderWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
 `
+
+export const RoleCell = styled.span`
+  padding-right: 5px;
+`

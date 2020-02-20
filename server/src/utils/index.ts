@@ -14,7 +14,8 @@ export const generateJWT = (info: any) => {
 export const verifyUser = (token: string) => {
   try {
     if (token) {
-      return jsonwebtoken.verify(token, secret)
+      const tokenContent = token.replace('Bearer ', '')
+      return jsonwebtoken.verify(tokenContent, secret)
     }
   } catch (error) {
     console.error(error)

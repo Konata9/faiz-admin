@@ -1,21 +1,15 @@
 import { observable, action } from 'mobx'
 import { queryGQL } from '@src/client'
 import { login, GET_USERINFO, GET_USERLIST } from '@service/user'
+import { IRole } from './role'
 import { STORAGE_KEYS, RESPONSE_STATUS } from '@constants'
 import { encryptedValue } from '@utils'
 
-interface IUserInfo {
+export interface IUserInfo {
   nickname: string
   avatar: string
   phone: string
   email: string
-}
-
-interface IRole {
-  name: string
-  auths: Array<String>
-  createTime: string
-  updateTime: string
 }
 
 interface IUser {
@@ -33,7 +27,7 @@ export class UserStore {
   token: string | null = localStorage.getItem(STORAGE_KEYS.TOKEN) || null
 
   @observable
-  userInfo: IUserInfo = { nickname: '', avatar: '', phone: '', email: '' }
+  userInfo: IUserInfo | null = null
 
   @observable
   userList: Array<IUser> = []

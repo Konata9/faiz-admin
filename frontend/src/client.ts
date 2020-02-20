@@ -23,22 +23,9 @@ const authMiddleware = new ApolloLink((operation, forward) => {
   return forward(operation);
 })
 
-const cleanTypeName = new ApolloLink((operation, forward) => {
-  if (operation.variables) {
-    console.log('fucked in ', operation)
-    const omitTypename = (key: any, value: any) => (key === '__typename' ? undefined : value);
-    operation.variables = JSON.parse(JSON.stringify(operation.variables), omitTypename);
-  }
-  return forward(operation).map((data) => {
-    return data;
-  });
-});
-
 const client = new ApolloClient({
   link: from([authMiddleware, httpLink]),
-  cache: new InMemoryCache({
-    addTypename: false
-  })
+  cache: new InMemoryCache()
 })
 
 interface IQuery {
@@ -54,7 +41,7 @@ export const queryGQL = async ({
 }: IQuery) => {
   try {
     caller && global.switchLoadingStatus(caller, true)
-    const { data } = await client.query({ query, variables })
+    const { data } = await client.query({ query, variables, fetchPolicy: 'no-cache' })
     // const cleanedData = 
     caller && global.switchLoadingStatus(caller, false)
 

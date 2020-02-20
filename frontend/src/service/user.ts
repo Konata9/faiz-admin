@@ -26,7 +26,9 @@ export const GET_USERLIST = gql`
       id
       username
       roles{
+        id
         name
+        auths
       }
       createTime
       updateTime

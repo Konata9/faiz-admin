@@ -20,4 +20,8 @@ export default {
   table: {
     action: '操作'
   },
+  time: {
+    createTime: '创建时间',
+    updateTime: '更新时间'
+  }
 }

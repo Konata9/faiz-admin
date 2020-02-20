@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Input, Select, Button, Card, Table, Modal } from 'antd'
+import { Form, Input, Select, Button, Card, Table, Modal, Divider } from 'antd'
 import { FormComponentProps } from 'antd/lib/form'
 import { inject, observer } from 'mobx-react'
 import { IStore, UserStore, GlobalStore } from '@store'
-import { formatMessage } from '@utils'
-import { SearchbarWrapper, TableHeaderWrapper } from './style'
+import { formatMessage, formatTime } from '@utils'
+import { ActionLink } from '@modules/style/layout'
+import { SearchbarWrapper, TableHeaderWrapper, RoleCell } from './style'
 
 
 const Searchbar = Form.create()(({ form }: FormComponentProps) => {
@@ -112,6 +113,36 @@ const columns = [
     dataIndex: 'username',
     key: 'username'
   },
+  {
+    title: formatMessage('role'),
+    dataIndex: 'roles',
+    key: 'roles',
+    ellipsis: true,
+    render: (roles: Array<any>) => (
+      <>{
+        roles.map(role => {
+          const { name, id } = role
+          return <RoleCell key={id}>{name}</RoleCell>
+        })
+      }</>
+    )
+  },
+  {
+    title: formatMessage('time.createTime'),
+    dataIndex: 'createTime',
+    key: 'createTime',
+    render: (time: string) => (
+      <>{formatTime({ time, formatter: 'YYYY-MM-DD HH:mm' })}</>
+    )
+  },
+  {
+    title: formatMessage('time.updateTime'),
+    dataIndex: 'updateTime',
+    key: 'updateTime',
+    render: (time: string) => (
+      <>{formatTime({ time, formatter: 'YYYY-MM-DD HH:mm' })}</>
+    )
+  },
 ]
 
 const UserList = ({ data }: { data: Array<any> }) => {
@@ -120,7 +151,16 @@ const UserList = ({ data }: { data: Array<any> }) => {
 
   const colAction = {
     title: formatMessage('table.action'),
-    key: 'action'
+    key: 'action',
+    render: (_: any, record: any) => {
+      return (
+        <>
+          <ActionLink>{formatMessage('button.edit')}</ActionLink>
+          <Divider type="vertical" />
+          <ActionLink>{formatMessage('button.delete')}</ActionLink>
+        </>
+      )
+    }
   }
   const tableColumn = [...columns, colAction]
 

@@ -1,9 +1,15 @@
 import intl from 'react-intl-universal'
 import CryptoJS from 'crypto-js'
+import moment, { Moment } from 'moment'
 import CONFIG from '@config'
 
 const { crypto: { secret } } = CONFIG
 const frontEndSecret = CryptoJS.enc.Utf8.parse(secret)
+
+interface ITime {
+  time: string | Date | Moment
+  formatter: string
+}
 
 export const formatMessage = (id: string, value: any = null) => {
   return intl.get(id, value) || id
@@ -35,4 +41,9 @@ export const decryptValue = (encryptedValue: any) => {
   })
 
   return CryptoJS.enc.Utf8.stringify(decryptedValue)
+}
+
+export const formatTime = ({ time, formatter = 'YYYY-MM-DD HH:mm:ss' }: ITime) => {
+  const formattedTime = moment(time).format(formatter)
+  return formattedTime
 }
