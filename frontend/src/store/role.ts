@@ -19,4 +19,14 @@ export class RoleStore {
 
   @observable
   roleList: Array<IRole> = []
+
+  @action.bound
+  async getRoles() {
+    const caller = this.getRoles.name
+    const { roles } = await queryGQL({ query: GET_ROLELIST, caller })
+    this.roleList = roles
+  }
 }
+
+const roleStore = new RoleStore()
+export default roleStore

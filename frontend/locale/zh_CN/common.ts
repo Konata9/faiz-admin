@@ -15,7 +15,8 @@ export default {
     update: '更新',
     delete: '删除',
     edit: '编辑',
-    search: '搜索'
+    search: '搜索',
+    detail: '详情',
   },
   table: {
     action: '操作'

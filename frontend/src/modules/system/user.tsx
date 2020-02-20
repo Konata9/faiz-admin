@@ -155,7 +155,7 @@ const UserList = ({ data }: { data: Array<any> }) => {
     render: (_: any, record: any) => {
       return (
         <>
-          <ActionLink>{formatMessage('button.edit')}</ActionLink>
+          <ActionLink>{formatMessage('button.detail')}</ActionLink>
           <Divider type="vertical" />
           <ActionLink>{formatMessage('button.delete')}</ActionLink>
         </>
