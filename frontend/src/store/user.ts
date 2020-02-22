@@ -1,6 +1,7 @@
 import { observable, action } from 'mobx'
 import { queryGQL } from '@src/client'
 import { login, GET_USERINFO, GET_USERLIST } from '@service/user'
+import { watchLoading } from './global'
 import { IRole } from './role'
 import { STORAGE_KEYS, RESPONSE_STATUS } from '@constants'
 import { encryptedValue } from '@utils'
@@ -33,24 +34,24 @@ export class UserStore {
   userList: Array<IUser> = []
 
   @action.bound
+  @watchLoading()
   async getUserInfo(userId: string) {
-    const { name: caller } = this.getUserInfo
     const { userInfo } = await queryGQL({
       query: GET_USERINFO,
       variables: { userId },
-      caller
     })
     this.userInfo = userInfo
   }
 
   @action.bound
+  @watchLoading()
   async getUserList() {
-    const { name: caller } = this.getUserList
-    const { users } = await queryGQL({ query: GET_USERLIST, caller })
+    const { users } = await queryGQL({ query: GET_USERLIST })
     this.userList = users
   }
 
   @action.bound
+  @watchLoading()
   async login(account: ({ username: string, password: string })): Promise<{ status: string }> {
     const { username, password } = account
     const { data } = await login({ username, password: encryptedValue(password) })
@@ -69,6 +70,7 @@ export class UserStore {
   }
 
   @action.bound
+  @watchLoading()
   logout(): void {
     localStorage.clear()
     window.location.href = '/login'

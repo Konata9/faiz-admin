@@ -1,6 +1,7 @@
 import { observable, action } from 'mobx'
 import { queryGQL } from '@src/client'
 import { GET_ROLE, GET_ROLELIST } from '@service/role'
+import { watchLoading } from './global'
 
 export interface IRole {
   id: string
@@ -21,10 +22,16 @@ export class RoleStore {
   roleList: Array<IRole> = []
 
   @action.bound
+  @watchLoading()
   async getRoles() {
-    const caller = this.getRoles.name
-    const { roles } = await queryGQL({ query: GET_ROLELIST, caller })
+    const { roles } = await queryGQL({ query: GET_ROLELIST })
     this.roleList = roles
+  }
+
+  @action.bound
+  @watchLoading()
+  async createRole() {
+
   }
 }
 

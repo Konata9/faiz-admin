@@ -11,7 +11,7 @@ import { formatMessage } from '@utils'
 const menuList = [
   {
     name: 'dashboard',
-    link: '/'
+    link: '/dashboard'
   },
   {
     name: 'system',

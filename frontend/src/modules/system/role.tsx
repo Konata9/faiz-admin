@@ -62,64 +62,67 @@ const TableHeader = () => {
   )
 }
 
-const RoleList = ({ data }: { data: Array<any> }) => {
-  const [currentPage, setCurrentPage] = useState(1)
-  const [pageSize, setPageSize] = useState(10)
-
-  const colAction = {
-    title: formatMessage('table.action'),
-    key: 'action',
-    render: (_: any, record: any) => {
-      return (
-        <>
-          <ActionLink>{formatMessage('button.edit')}</ActionLink>
-          <Divider type="vertical" />
-          <ActionLink>{formatMessage('button.delete')}</ActionLink>
-        </>
-      )
-    }
-  }
-  const tableColumn = [...columns, colAction]
-
-  return (
-    <Table
-      title={TableHeader}
-      columns={tableColumn}
-      rowKey="id"
-      dataSource={data}
-      pagination={{
-        current: currentPage,
-        pageSize
-      }}
-    />
-  )
-}
-
-interface IProps {
+interface IRoleListProps {
   global?: GlobalStore
   roleStore?: RoleStore
 }
 
-const Role = inject((stores: IStore) => {
+const RoleList = inject((stores: IStore) => {
   return {
     global: stores.global as GlobalStore,
     roleStore: stores.roleStore as RoleStore
   }
 })(
   observer(
-    ({ global, roleStore }: IProps) => {
-      const { roleList, getRoles } = roleStore as RoleStore
+    ({ global, roleStore }: IRoleListProps) => {
+      const { loadingStatus } = global as GlobalStore
+      const { getRoles, roleList } = roleStore as RoleStore
+
+      const [currentPage, setCurrentPage] = useState(1)
+      const [pageSize, setPageSize] = useState(10)
+
       useEffect(() => {
         getRoles()
       }, [])
 
+      const colAction = {
+        title: formatMessage('table.action'),
+        key: 'action',
+        render: (_: any, record: any) => {
+          return (
+            <>
+              <ActionLink>{formatMessage('button.edit')}</ActionLink>
+              <Divider type="vertical" />
+              <ActionLink>{formatMessage('button.delete')}</ActionLink>
+            </>
+          )
+        }
+      }
+      const tableColumn = [...columns, colAction]
+
       return (
-        <Card>
-          <Searchbar />
-          <RoleList data={roleList} />
-        </Card>
+        <Table
+          title={TableHeader}
+          columns={tableColumn}
+          loading={loadingStatus['getRoles']}
+          rowKey="id"
+          dataSource={roleList}
+          pagination={{
+            current: currentPage,
+            pageSize
+          }}
+        />
       )
     }
   )
 )
+
+const Role = () => {
+  return (
+    <Card>
+      <Searchbar />
+      <RoleList />
+    </Card>
+  )
+}
 export default Role

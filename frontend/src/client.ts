@@ -1,5 +1,4 @@
-import { ApolloClient, ApolloLink, HttpLink, from, InMemoryCache, DocumentNode } from 'apollo-boost'
-import global from '@store/global'
+import { ApolloClient, ApolloLink, HttpLink, from, InMemoryCache, QueryOptions, MutationOptions } from 'apollo-boost'
 import { STORAGE_KEYS } from '@constants'
 import CONFIG from '@config'
 
@@ -28,26 +27,31 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 })
 
-interface IQuery {
-  query: DocumentNode
-  variables?: any
-  caller?: string | null
-}
-
 export const queryGQL = async ({
   query,
   variables = {},
-  caller = null
-}: IQuery) => {
+}: QueryOptions) => {
   try {
-    caller && global.switchLoadingStatus(caller, true)
     const { data } = await client.query({ query, variables, fetchPolicy: 'no-cache' })
-    // const cleanedData = 
-    caller && global.switchLoadingStatus(caller, false)
-
     return data
   } catch (error) {
     console.error(error)
+  }
+}
+
+export const mutateGQL = async ({
+  mutation,
+  variables = {}
+}: MutationOptions) => {
+  try {
+    const { data } = await client.mutate({
+      mutation,
+      variables,
+      fetchPolicy: 'no-cache'
+    })
+    return data
+  } catch (error) {
+    console.log(error)
   }
 }
 
