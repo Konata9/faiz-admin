@@ -5,7 +5,7 @@ import { StyledLayout } from '@modules/style/layout'
 import { SideBar, Container } from './style'
 
 import { IRouter } from '@modules/routes'
-import { IStore } from '@store'
+import { IStore, RootStore } from '@store'
 import { UserStore } from '@store/user'
 
 import Menu from './menu'
@@ -14,17 +14,20 @@ import Content from './content'
 
 interface IProps {
   routes: IRouter[]
+  rootStore?: RootStore,
   userStore?: UserStore
 }
 
 const Layout = inject((stores: IStore) => {
   return {
+    rootStore: stores.rootStore as RootStore,
     userStore: stores.userStore as UserStore
   }
 })(
   observer(
-    ({ routes, userStore }: IProps) => {
+    ({ routes, userStore, rootStore }: IProps) => {
       const history = useHistory()
+      const { getMenuList } = rootStore as RootStore
       const checkToken = () => {
         const { token } = userStore as UserStore
         if (!token) {
@@ -36,6 +39,7 @@ const Layout = inject((stores: IStore) => {
         checkToken()
         const { id: userId, getUserInfo } = userStore as UserStore
         getUserInfo(userId)
+        getMenuList()
       }, [])
 
       return (

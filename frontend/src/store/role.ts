@@ -1,6 +1,7 @@
 import { observable, action } from 'mobx'
-import { queryGQL } from '@src/client'
-import { GET_ROLE, GET_ROLELIST } from '@service/role'
+import { queryGQL, mutateGQL } from '@src/client'
+import { RESPONSE_STATUS } from '@constants'
+import { GET_ROLE, GET_ROLELIST, CREATE_ROLE } from '@service/role'
 import { watchLoading } from './global'
 
 export interface IRole {
@@ -23,15 +24,23 @@ export class RoleStore {
 
   @action.bound
   @watchLoading()
-  async getRoles() {
-    const { roles } = await queryGQL({ query: GET_ROLELIST })
+  async getRoles(name?: string) {
+    const variables = name ? { name } : undefined
+    const { roles } = await queryGQL({ query: GET_ROLELIST, variables })
     this.roleList = roles
   }
 
   @action.bound
   @watchLoading()
-  async createRole() {
-
+  async createRole(roleInfo: ({ name: string })) {
+    try {
+      await mutateGQL({ mutation: CREATE_ROLE, variables: { ...roleInfo } })
+      await this.getRoles()
+      return { status: RESPONSE_STATUS.SUCCESS }
+    } catch (error) {
+      console.error(error)
+      return { status: RESPONSE_STATUS.FAILED }
+    }
   }
 }
 

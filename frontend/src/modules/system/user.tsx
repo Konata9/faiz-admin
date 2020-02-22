@@ -149,20 +149,7 @@ const UserList = ({ data }: { data: Array<any> }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
 
-  const colAction = {
-    title: formatMessage('table.action'),
-    key: 'action',
-    render: (_: any, record: any) => {
-      return (
-        <>
-          <ActionLink>{formatMessage('button.detail')}</ActionLink>
-          <Divider type="vertical" />
-          <ActionLink>{formatMessage('button.delete')}</ActionLink>
-        </>
-      )
-    }
-  }
-  const tableColumn = [...columns, colAction]
+  const tableColumn = [...columns]
 
   return (
     <Table

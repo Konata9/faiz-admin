@@ -3,12 +3,12 @@ import { RoleModel } from '@graphql/schema/role'
 interface IRole {
   id?: string
   name: string
-  auth: [string]
+  auths: [String] | []
 }
 
-export const getRoles = async () => {
+export const getRoles = async (condition: any = {}) => {
   try {
-    return await RoleModel.find()
+    return await RoleModel.find({ ...condition })
   } catch (error) {
     console.log(error)
   }
@@ -24,7 +24,11 @@ export const getRole = async (id: string) => {
 
 export const createRole = async (roleInfo: IRole) => {
   try {
-    return await RoleModel.create(roleInfo)
+    return await RoleModel.create({
+      ...roleInfo,
+      createTime: new Date(),
+      updateTime: new Date()
+    })
   } catch (error) {
     console.log(error)
   }

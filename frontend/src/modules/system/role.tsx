@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Input, Button, Card, Table, Divider } from 'antd'
+import { Form, Input, Button, Card, Table, Modal, message } from 'antd'
 import { FormComponentProps } from 'antd/lib/form'
 import { inject, observer } from 'mobx-react'
 import { formatMessage, formatTime } from '@utils'
@@ -7,23 +7,97 @@ import { formatMessage, formatTime } from '@utils'
 import { IStore, RoleStore, GlobalStore } from '@store'
 import { SearchbarWrapper, TableHeaderWrapper } from './style'
 import { ActionLink } from '@modules/style/layout'
+import { RESPONSE_STATUS } from '@src/constants'
 
-const Searchbar = Form.create()(({ form }: FormComponentProps) => {
-  const { getFieldDecorator } = form
+interface ISearchbarProps extends FormComponentProps {
+  roleStore?: RoleStore
+}
+
+const Searchbar = Form.create()(
+  inject((stores: IStore) => {
+    return {
+      roleStore: stores.roleStore as RoleStore
+    }
+  })(({ form, roleStore }: ISearchbarProps) => {
+    const { getFieldDecorator, validateFields } = form
+    const { getRoles } = roleStore as RoleStore
+
+    const searchRoles = () => {
+      validateFields((error, values) => {
+        if (!error) {
+          const { roleName } = values
+          getRoles(roleName)
+        }
+      })
+    }
+
+    return (
+      <SearchbarWrapper>
+        <Form layout="inline">
+          <Form.Item label={formatMessage('role')}>
+            {getFieldDecorator('roleName')(
+              <Input placeholder={formatMessage('placeholder.role')} />
+            )}
+          </Form.Item>
+          <Form.Item>
+            <Button icon="search" type="primary" onClick={searchRoles}>{formatMessage('button.search')}</Button>
+          </Form.Item>
+        </Form>
+      </SearchbarWrapper>
+    )
+  })
+)
+
+interface IRoleModal extends FormComponentProps {
+  visible?: boolean
+  confirmModal?: (params?: any) => any
+  closeModal?: (params?: any) => any
+}
+
+const RoleModal = Form.create<IRoleModal>()(({
+  form,
+  visible = false,
+  confirmModal = (() => { }),
+  closeModal = (() => { })
+}: IRoleModal) => {
+  const { getFieldDecorator, validateFields } = form
+
+  const doModalConfirm = async () => {
+    validateFields(async (error, values) => {
+      if (!error) {
+        const { name } = values
+        const { status } = await confirmModal({ name })
+        if (status === RESPONSE_STATUS.SUCCESS) {
+          message.success(formatMessage('role_create_success'))
+        } else {
+          message.error(formatMessage('role_create_fail'))
+        }
+        closeModal()
+      }
+    })
+  }
+
+  const doModalClose = () => {
+    closeModal()
+  }
 
   return (
-    <SearchbarWrapper>
-      <Form layout="inline">
+    <Modal
+      destroyOnClose
+      okText={formatMessage('button.confirm')}
+      cancelText={formatMessage('button.cancel')}
+      visible={visible}
+      onOk={doModalConfirm}
+      onCancel={doModalClose}
+    >
+      <Form>
         <Form.Item label={formatMessage('role')}>
-          {getFieldDecorator('role')(
-            <Input placeholder={formatMessage('placeholder.username_search')} />
+          {getFieldDecorator('name')(
+            <Input placeholder={formatMessage('placeholder.role')} />
           )}
         </Form.Item>
-        <Form.Item>
-          <Button icon="search" type="primary">{formatMessage('button.search')}</Button>
-        </Form.Item>
       </Form>
-    </SearchbarWrapper>
+    </Modal>
   )
 })
 
@@ -51,13 +125,25 @@ const columns = [
   },
 ]
 
-const TableHeader = () => {
+const TableHeader = ({ createRole }: any) => {
+  const [modalVisible, setModalVisible] = useState(false)
+  const openUserModal = () => {
+    setModalVisible(true)
+  }
+
+  const closeModal = () => {
+    setModalVisible(false)
+  }
   return (
     <TableHeaderWrapper>
       <span>{formatMessage('modules.roleList')}</span>
-      <Button type="primary" icon="plus">
+      <Button type="primary" icon="plus" onClick={openUserModal}>
         {formatMessage('role_create')}
       </Button>
+      <RoleModal
+        visible={modalVisible}
+        confirmModal={createRole}
+        closeModal={closeModal} />
     </TableHeaderWrapper>
   )
 }
@@ -76,7 +162,7 @@ const RoleList = inject((stores: IStore) => {
   observer(
     ({ global, roleStore }: IRoleListProps) => {
       const { loadingStatus } = global as GlobalStore
-      const { getRoles, roleList } = roleStore as RoleStore
+      const { getRoles, createRole, roleList } = roleStore as RoleStore
 
       const [currentPage, setCurrentPage] = useState(1)
       const [pageSize, setPageSize] = useState(10)
@@ -85,24 +171,11 @@ const RoleList = inject((stores: IStore) => {
         getRoles()
       }, [])
 
-      const colAction = {
-        title: formatMessage('table.action'),
-        key: 'action',
-        render: (_: any, record: any) => {
-          return (
-            <>
-              <ActionLink>{formatMessage('button.edit')}</ActionLink>
-              <Divider type="vertical" />
-              <ActionLink>{formatMessage('button.delete')}</ActionLink>
-            </>
-          )
-        }
-      }
-      const tableColumn = [...columns, colAction]
+      const tableColumn = [...columns]
 
       return (
         <Table
-          title={TableHeader}
+          title={() => <TableHeader createRole={createRole} />}
           columns={tableColumn}
           loading={loadingStatus['getRoles']}
           rowKey="id"

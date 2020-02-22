@@ -13,13 +13,21 @@ export const GET_ROLE = gql`
 `
 
 export const GET_ROLELIST = gql`
-  query Roles{
-    roles{
+  query Roles($name: String){
+    roles(name:$name){
       id
       name
       auths
       createTime
       updateTime
+    }
+  }
+`
+
+export const CREATE_ROLE = gql`
+  mutation CreateRole($name: String!){
+    createRole(name:$name){
+      id
     }
   }
 `

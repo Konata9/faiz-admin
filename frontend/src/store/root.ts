@@ -1,6 +1,8 @@
 import intl from 'react-intl-universal'
 import { observable, action } from 'mobx'
+import { queryGQL } from '@src/client'
 import { LANGUAGE, LANGUAGE_STORE_KEY, STORAGE_KEYS } from '@constants'
+import { GET_MENUS } from '@service/root'
 import zh_CN from '@locale/zh_CN'
 
 const DEFAULT_LANGUAGE = LANGUAGE.ZH_CN
@@ -46,7 +48,12 @@ export class RootStore {
 
   @action.bound
   async getMenuList(): Promise<void> {
-    this.menuList = []
+    try {
+      const { menu } = await queryGQL({ query: GET_MENUS })
+      this.menuList = menu
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   @action.bound

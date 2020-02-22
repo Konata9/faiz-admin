@@ -1,6 +1,6 @@
-import { Resolver, Query, Arg } from 'type-graphql'
+import { Resolver, Query, Arg, Mutation } from 'type-graphql'
 import { Role } from '@src/graphql/schema/role'
-import { getRoles, getRole } from '@controller/role'
+import { getRoles, getRole, createRole } from '@controller/role'
 
 @Resolver(Role)
 class RolesResolver {
@@ -17,9 +17,23 @@ class RolesResolver {
   }
 
   @Query(returns => [Role])
-  async roles() {
+  async roles(
+    @Arg("name", { nullable: true }) name?: string
+  ) {
     try {
-      return await getRoles()
+      const condition = name ? { name } : {}
+      return await getRoles(condition)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  @Mutation(returns => Role)
+  async createRole(
+    @Arg("name") name: string,
+  ) {
+    try {
+      return await createRole({ name, auths: [] })
     } catch (error) {
       console.log(error)
     }

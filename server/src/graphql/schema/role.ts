@@ -14,7 +14,7 @@ export class Role {
 
   @Field(types => [String])
   @arrayProp({ items: String })
-  auths: string[]
+  auths: [String]
 
   @Field()
   @mongooseProps({ default: Date.now })

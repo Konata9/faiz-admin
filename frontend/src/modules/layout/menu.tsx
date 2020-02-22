@@ -8,27 +8,6 @@ import Logo from './logo'
 import { IStore, RootStore } from '@store'
 import { formatMessage } from '@utils'
 
-const menuList = [
-  {
-    name: 'dashboard',
-    link: '/dashboard'
-  },
-  {
-    name: 'system',
-    link: '/system',
-    submenu: [
-      {
-        name: 'system_user',
-        link: '/system/user'
-      },
-      {
-        name: 'system_role',
-        link: '/system/role'
-      }
-    ]
-  }
-]
-
 interface IProps {
   rootStore?: RootStore
 }
@@ -41,10 +20,9 @@ const MenuList = inject((stores: IStore): IProps => {
   observer(
     ({ rootStore }: IProps) => {
 
-      const { openKeys, activeMenu, setOpenMenus, setActiveMenu } = rootStore as RootStore
+      const { openKeys, activeMenu, setOpenMenus, setActiveMenu, menuList } = rootStore as RootStore
 
       const changeOpenMenu = (openKeys: string[]) => {
-        console.log(openKeys)
         setOpenMenus(openKeys)
       }
 
@@ -55,7 +33,7 @@ const MenuList = inject((stores: IStore): IProps => {
       const createMenuList = (menuList: Array<any>): any => {
         return menuList.map((menu) => {
           const { submenu, name, link = '' } = menu
-          if (submenu) {
+          if (submenu && submenu.length > 0) {
             return (
               <Menu.SubMenu title={formatMessage(`menu.${name}`)} key={link} >
                 {...createMenuList(submenu)}
