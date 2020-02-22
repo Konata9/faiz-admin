@@ -1,8 +1,8 @@
 import React from 'react'
 import { ContentWrapper } from './style'
-import RenderRoutes from '@modules/renderRoutes'
+import RenderRoutes from '@src/pages/renderRoutes'
 
-import { IRouter } from '@modules/routes'
+import { IRouter } from '@src/pages/routes'
 
 interface IProps {
   routes: IRouter[]

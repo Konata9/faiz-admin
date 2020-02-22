@@ -1,7 +1,7 @@
 import React from 'react'
 import { LogoWrapper } from './style'
-import { fontLight } from '@modules/style/color'
-import { RouterLink } from '@modules/style/layout'
+import { fontLight } from '@src/pages/style/color'
+import { RouterLink } from '@src/pages/style/layout'
 
 const Logo = () => {
   return (

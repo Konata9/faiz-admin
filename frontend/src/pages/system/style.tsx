@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { fontDark } from '@modules/style/color'
+import { fontDark } from '@src/pages/style/color'
 
 export const SearchbarWrapper = styled.div`
   width: 100%;

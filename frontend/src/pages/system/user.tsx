@@ -4,7 +4,7 @@ import { FormComponentProps } from 'antd/lib/form'
 import { inject, observer } from 'mobx-react'
 import { IStore, UserStore, GlobalStore } from '@store'
 import { formatMessage, formatTime } from '@utils'
-import { ActionLink } from '@modules/style/layout'
+import { ActionLink } from '@src/pages/style/layout'
 import { SearchbarWrapper, TableHeaderWrapper, RoleCell } from './style'
 
 interface ISearchbarProps extends FormComponentProps {

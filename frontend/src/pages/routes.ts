@@ -1,9 +1,9 @@
-import Login from '@modules/login'
-import Layout from '@modules/layout'
-import Dashboard from '@modules/dashboard'
-import User from '@modules/system/user'
-import Role from '@modules/system/role'
-import Account from '@modules/account'
+import Login from '@src/pages/login'
+import Layout from '@src/pages/layout'
+import Dashboard from '@src/pages/dashboard'
+import User from '@src/pages/system/user'
+import Role from '@src/pages/system/role'
+import Account from '@src/pages/account'
 
 export interface IRouter {
   path: string

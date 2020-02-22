@@ -1,7 +1,7 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
 import { Menu } from 'antd'
-import { RouterLink } from '@modules/style/layout'
+import { RouterLink } from '@src/pages/style/layout'
 import { MenuWrapper } from './style'
 import Logo from './logo'
 

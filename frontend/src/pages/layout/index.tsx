@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
-import { StyledLayout } from '@modules/style/layout'
+import { StyledLayout } from '@src/pages/style/layout'
 import { SideBar, Container } from './style'
 
-import { IRouter } from '@modules/routes'
+import { IRouter } from '@src/pages/routes'
 import { IStore, RootStore } from '@store'
 import { UserStore } from '@store/user'
 

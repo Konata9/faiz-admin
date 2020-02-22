@@ -6,7 +6,7 @@ import Breadcrumb from './breadcrumb'
 import { formatMessage } from '@utils'
 import { IStore, UserStore, GlobalStore } from '@store'
 import { HeaderWrapper, UserInfoWrapper, UserNameWrapper } from './style'
-import { RouterLink } from '@modules/style/layout'
+import { RouterLink } from '@src/pages/style/layout'
 
 interface IProps {
   global?: GlobalStore

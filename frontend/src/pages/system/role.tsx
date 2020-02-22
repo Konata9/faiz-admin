@@ -6,7 +6,7 @@ import { formatMessage, formatTime } from '@utils'
 
 import { IStore, RoleStore, GlobalStore } from '@store'
 import { SearchbarWrapper, TableHeaderWrapper } from './style'
-import { ActionLink } from '@modules/style/layout'
+import { ActionLink } from '@src/pages/style/layout'
 import { RESPONSE_STATUS } from '@src/constants'
 
 interface ISearchbarProps extends FormComponentProps {
