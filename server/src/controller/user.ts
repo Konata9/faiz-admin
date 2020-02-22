@@ -13,9 +13,9 @@ export async function checkUserExist(condition: IAccount) {
   }
 }
 
-export async function findUsers() {
+export async function findUsers(condition: any) {
   try {
-    const users = await UserModel.find({}, { password: false }).populate('roles').exec()
+    const users = await UserModel.find({ ...condition }, { password: false }).populate('roles').exec()
     return users
   } catch (error) {
     console.error(error)

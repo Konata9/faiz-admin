@@ -1,6 +1,6 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import { IRouter } from '@modules/routes'
+import { IRouter } from '@src/pages/routes'
 
 const RenderRoutes = ({ routes }: { routes: Array<IRouter> }) => {
   return (

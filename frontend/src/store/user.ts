@@ -15,9 +15,9 @@ export interface IUserInfo {
 
 interface IUser {
   username: string
-  roles: Array<IRole>
-  createTime: string
-  updateTime: string
+  roles?: Array<IRole>
+  createTime?: string
+  updateTime?: string
 }
 
 export class UserStore {
@@ -45,9 +45,16 @@ export class UserStore {
 
   @action.bound
   @watchLoading()
-  async getUserList() {
-    const { users } = await queryGQL({ query: GET_USERLIST })
+  async getUserList(username?: string) {
+    const variables = username ? { username } : undefined
+    const { users } = await queryGQL({ query: GET_USERLIST, variables })
     this.userList = users
+  }
+
+  @action.bound
+  @watchLoading()
+  async createUser(user: IUser) {
+
   }
 
   @action.bound

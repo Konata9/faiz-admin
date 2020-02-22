@@ -22,7 +22,7 @@ module.exports = {
       "@src": path.resolve(__dirname, '../src'),
       "@constants": path.resolve(__dirname, '../src/constants'),
       "@interface": path.resolve(__dirname, '../src/interface'),
-      "@modules": path.resolve(__dirname, '../src/modules'),
+      "@pages": path.resolve(__dirname, '../src/pages'),
       "@store": path.resolve(__dirname, '../src/store'),
       "@service": path.resolve(__dirname, '../src/service'),
       "@utils": path.resolve(__dirname, '../src/utils')

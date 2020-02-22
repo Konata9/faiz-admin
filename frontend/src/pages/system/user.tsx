@@ -7,32 +7,51 @@ import { formatMessage, formatTime } from '@utils'
 import { ActionLink } from '@modules/style/layout'
 import { SearchbarWrapper, TableHeaderWrapper, RoleCell } from './style'
 
+interface ISearchbarProps extends FormComponentProps {
+  userStore?: UserStore
+}
 
-const Searchbar = Form.create()(({ form }: FormComponentProps) => {
-  const { getFieldDecorator } = form
-  const doSearch = () => { }
+const Searchbar = Form.create()(
+  inject((stores: IStore) => {
+    return {
+      userStore: stores.userStore as UserStore
+    }
+  })(
+    observer(
+      (({ form, userStore }: ISearchbarProps) => {
+        const { getFieldDecorator, validateFields } = form
+        const { getUserList } = userStore as UserStore
+        const doSearch = () => {
+          validateFields(async (error, values) => {
+            const { searchName: username } = values
+            await getUserList(username)
+          })
+        }
 
-  return (
-    <SearchbarWrapper>
-      <Form layout="inline">
-        <Form.Item label={formatMessage('username')}>
-          {getFieldDecorator('username')(
-            <Input placeholder={formatMessage('placeholder.username_search')} />
-          )}
-        </Form.Item>
-        <Form.Item>
-          <Button
-            icon="search"
-            type="primary"
-            onClick={doSearch}
-          >
-            {formatMessage('button.search')}
-          </Button>
-        </Form.Item>
-      </Form>
-    </SearchbarWrapper>
+        return (
+          <SearchbarWrapper>
+            <Form layout="inline">
+              <Form.Item label={formatMessage('username')}>
+                {getFieldDecorator('searchName')(
+                  <Input placeholder={formatMessage('placeholder.username_search')} />
+                )}
+              </Form.Item>
+              <Form.Item>
+                <Button
+                  icon="search"
+                  type="primary"
+                  onClick={doSearch}
+                >
+                  {formatMessage('button.search')}
+                </Button>
+              </Form.Item>
+            </Form>
+          </SearchbarWrapper>
+        )
+      })
+    )
   )
-})
+)
 
 interface IUserModal extends FormComponentProps {
   visible?: boolean

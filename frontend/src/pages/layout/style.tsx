@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Link, LinkProps } from 'react-router-dom'
-import { bgDark, bgWhite, fontDark, fontBlue, fontGray, borderLight } from '@modules/style/color'
+import { bgDark, bgWhite, fontDark, fontBlue, fontGray, borderLight } from '@src/pages/style/color'
 
 interface IBreadLink extends LinkProps {
   current: any

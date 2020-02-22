@@ -10,7 +10,7 @@ import { Provider } from 'mobx-react'
 
 import client from './client'
 import store from '@store'
-import App from '@modules/app'
+import App from '@src/pages/app'
 
 ReactDOM.render(
   <Provider {...store}>

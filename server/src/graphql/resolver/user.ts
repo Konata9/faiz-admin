@@ -21,8 +21,11 @@ class UserResolver {
   }
 
   @Query(returns => [User], { nullable: true })
-  async users() {
-    return await findUsers()
+  async users(
+    @Arg('username', { nullable: true }) username?: string
+  ) {
+    const condition = username ? { username } : {}
+    return await findUsers(condition)
   }
 }
 

@@ -21,8 +21,8 @@ export const GET_USERINFO = gql`
   }
 `
 export const GET_USERLIST = gql`
-  query Users {
-    users{
+  query Users($username: String) {
+    users(username: $username){
       id
       username
       roles{
