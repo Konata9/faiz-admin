@@ -3,6 +3,7 @@ export interface IAccount {
   id?: string
   username?: string
   password?: string
+  roles?: string[]
 }
 
 export async function checkUserExist(condition: IAccount) {
@@ -40,7 +41,11 @@ export async function findUserById(id: string) {
 
 export async function createUser(userInfo: IAccount) {
   try {
-    return await UserModel.create(userInfo)
+    return await UserModel.create({
+      ...userInfo,
+      createTime: new Date(),
+      updateTime: new Date()
+    })
   } catch (error) {
     console.error(error)
   }

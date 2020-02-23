@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx'
-import { queryGQL } from '@src/client'
-import { login, GET_USERINFO, GET_USERLIST } from '@service/user'
+import { queryGQL, mutateGQL } from '@src/client'
+import { login, GET_USERINFO, GET_USERLIST, CREATE_USER } from '@service/user'
 import { watchLoading } from './global'
 import { IRole } from './role'
 import { STORAGE_KEYS, RESPONSE_STATUS } from '@constants'
@@ -15,6 +15,7 @@ export interface IUserInfo {
 
 interface IUser {
   username: string
+  password?: string
   roles?: Array<IRole>
   createTime?: string
   updateTime?: string
@@ -54,7 +55,20 @@ export class UserStore {
   @action.bound
   @watchLoading()
   async createUser(user: IUser) {
-
+    const { username, password, roles } = user
+    try {
+      await mutateGQL({
+        mutation: CREATE_USER, variables: {
+          username,
+          password: encryptedValue(password),
+          roles
+        }
+      })
+      await this.getUserList()
+      return { status: RESPONSE_STATUS.SUCCESS }
+    } catch (error) {
+      return { status: RESPONSE_STATUS.FAILED }
+    }
   }
 
   @action.bound

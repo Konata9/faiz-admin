@@ -4,6 +4,8 @@ export default {
   account: '账号',
   account_center: '个人中心',
   account_create: '新建用户',
+  account_create_success: '用户创建成功',
+  account_create_fail: '用户创建失败',
   role: '角色',
   role_create: '新建角色',
   role_create_success: '角色创建成功',

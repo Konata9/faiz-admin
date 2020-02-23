@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Input, Select, Button, Card, Table, Modal, Divider } from 'antd'
+import { Form, Input, Select, Button, Card, Table, Modal, message } from 'antd'
 import { FormComponentProps } from 'antd/lib/form'
 import { inject, observer } from 'mobx-react'
-import { IStore, UserStore, GlobalStore } from '@store'
+import { IStore, UserStore, GlobalStore, RoleStore } from '@store'
 import { formatMessage, formatTime } from '@utils'
-import { ActionLink } from '@src/pages/style/layout'
 import { SearchbarWrapper, TableHeaderWrapper, RoleCell } from './style'
+import { RESPONSE_STATUS } from '@src/constants'
 
 interface ISearchbarProps extends FormComponentProps {
   userStore?: UserStore
@@ -55,20 +55,37 @@ const Searchbar = Form.create()(
 
 interface IUserModal extends FormComponentProps {
   visible?: boolean
-  confirmModal?: () => void
-  closeModal?: () => void
+  roleList?: []
+  confirmModal?: (params?: any) => any
+  closeModal?: (params?: any) => any
 }
 
 const UserModal = Form.create<IUserModal>()(({
   form,
+  roleList = [],
   visible = false,
   confirmModal = (() => { }),
   closeModal = (() => { })
 }: IUserModal) => {
-  const { getFieldDecorator } = form
+  const { getFieldDecorator, validateFields } = form
 
   const doModalConfirm = async () => {
-    confirmModal()
+    validateFields(async (error, values) => {
+      if (!error) {
+        const { username, roles, password } = values
+        const { status } = await confirmModal({
+          username,
+          roles,
+          password
+        })
+        if (status === RESPONSE_STATUS.SUCCESS) {
+          message.success(formatMessage('account_create_success'))
+        } else {
+          message.error(formatMessage('account_create_fail'))
+        }
+        doModalClose()
+      }
+    })
   }
 
   const doModalClose = () => {
@@ -91,13 +108,22 @@ const UserModal = Form.create<IUserModal>()(({
           )}
         </Form.Item>
         <Form.Item label={formatMessage('role')}>
-          {getFieldDecorator('role')(
-            <Input placeholder={formatMessage('placeholder.username')} />
+          {getFieldDecorator('roles')(
+            <Select mode="multiple">
+              {
+                roleList.map(role => {
+                  const { id, name } = role
+                  return (
+                    <Select.Option value={id} key={id}>{name}</Select.Option>
+                  )
+                })
+              }
+            </Select>
           )}
         </Form.Item>
         <Form.Item label={formatMessage('password')}>
           {getFieldDecorator('password')(
-            <Input placeholder={formatMessage('placeholder.password')} />
+            <Input placeholder={formatMessage('placeholder.password')} type="password" />
           )}
         </Form.Item>
       </Form>
@@ -105,7 +131,7 @@ const UserModal = Form.create<IUserModal>()(({
   )
 })
 
-const TableHeader = () => {
+const TableHeader = ({ roleList, createUser }: any) => {
   const [modalVisible, setModalVisible] = useState(false)
   const openUserModal = () => {
     setModalVisible(true)
@@ -121,7 +147,7 @@ const TableHeader = () => {
       <Button type="primary" icon="plus" onClick={openUserModal}>
         {formatMessage('account_create')}
       </Button>
-      <UserModal visible={modalVisible} closeModal={closeModal} />
+      <UserModal roleList={roleList} visible={modalVisible} closeModal={closeModal} confirmModal={createUser} />
     </TableHeaderWrapper>
   )
 }
@@ -164,53 +190,55 @@ const columns = [
   },
 ]
 
-const UserList = ({ data }: { data: Array<any> }) => {
-  const [currentPage, setCurrentPage] = useState(1)
-  const [pageSize, setPageSize] = useState(10)
-
-  const tableColumn = [...columns]
-
-  return (
-    <Table
-      title={() => <TableHeader />}
-      rowKey="id"
-      columns={tableColumn}
-      dataSource={data}
-      pagination={{
-        current: currentPage,
-        pageSize
-      }}
-    />
-  )
-}
-
-interface IProps {
-  global?: GlobalStore
+interface IUserListProps {
+  roleStore?: RoleStore
   userStore?: UserStore
 }
 
-const User = inject((stores: IStore) => {
+const UserList = inject((stores: IStore) => {
   return {
-    global: stores.global as GlobalStore,
+    roleStore: stores.roleStore as RoleStore,
     userStore: stores.userStore as UserStore
   }
 })(
   observer(
-    ({ global, userStore }: IProps) => {
-      const { getUserList, userList } = userStore as UserStore
+    ({ userStore, roleStore }: IUserListProps) => {
+      const { getUserList, userList, createUser } = userStore as UserStore
+      const { roleList, getRoles } = roleStore as RoleStore
+      const [currentPage, setCurrentPage] = useState(1)
+      const [pageSize, setPageSize] = useState(10)
+
+      const tableColumn = [...columns]
 
       useEffect(() => {
         getUserList()
+        getRoles()
       }, [])
 
       return (
-        <Card>
-          <Searchbar />
-          <UserList data={userList} />
-        </Card>
+        <Table
+          title={() => <TableHeader roleList={roleList} createUser={createUser} />}
+          rowKey="id"
+          columns={tableColumn}
+          dataSource={userList}
+          pagination={{
+            current: currentPage,
+            pageSize
+          }}
+        />
       )
     }
   )
 )
+
+const User = () => {
+
+  return (
+    <Card>
+      <Searchbar />
+      <UserList />
+    </Card>
+  )
+}
 
 export default User

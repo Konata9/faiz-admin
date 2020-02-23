@@ -35,3 +35,11 @@ export const GET_USERLIST = gql`
     }
   }
 `
+
+export const CREATE_USER = gql`
+  mutation CreateUser($username: String!, $password:String!, $roles: [String!]){
+    createUser(username: $username, password:$password, roles: $roles){
+      id
+    }
+  }
+`

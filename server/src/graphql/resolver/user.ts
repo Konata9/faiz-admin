@@ -1,5 +1,5 @@
-import { Resolver, Query, Arg } from 'type-graphql'
-import { checkUserExist, findUserById, findUsers } from '@src/controller/user'
+import { Resolver, Query, Arg, Mutation } from 'type-graphql'
+import { checkUserExist, findUserById, findUsers, createUser } from '@src/controller/user'
 import { User } from '@graphql/schema/user'
 
 @Resolver(User)
@@ -26,6 +26,19 @@ class UserResolver {
   ) {
     const condition = username ? { username } : {}
     return await findUsers(condition)
+  }
+
+  @Mutation(returns => User)
+  async createUser(
+    @Arg('username') username: string,
+    @Arg('password') password: string,
+    @Arg('roles', type => [String], { nullable: true }) roles?: string[]
+  ) {
+    return await createUser({
+      username,
+      password,
+      roles,
+    })
   }
 }
 
