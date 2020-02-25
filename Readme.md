@@ -1,6 +1,6 @@
 # Faiz-admin
 
-一个基于 TypeScript 的前后端一体启动模板。帮助全干或想要全干的工程师们快速启动项目。项目介绍请参考[本文]()
+一个基于 TypeScript 的前后端一体启动模板。帮助全干或想要全干的工程师们快速启动项目。项目介绍请参考[本文](https://konata9.github.io/views/2020/%E5%85%A8%E5%B9%B2%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB%20%E5%89%8D%E5%90%8E%E7%AB%AF%E4%B8%80%E4%BD%93%E7%9A%84%E5%90%AF%E5%8A%A8%E6%A8%A1%E6%9D%BF.html)
 
 ## 技术栈
 
